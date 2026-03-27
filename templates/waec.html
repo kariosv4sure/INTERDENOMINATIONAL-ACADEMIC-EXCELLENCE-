@@ -1,0 +1,518 @@
+{% extends "base.html" %}
+
+{% block title %}WAEC Services | I.A.E™ - Your Path to O'LEVEL Success{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      padding: 5rem 0 4rem;
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 3rem 0;
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 640px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 0;
+      }
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-header {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .service-header i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-header h3 {
+      font-size: 1.5rem;
+    }
+
+    .service-body {
+      padding: 1.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+
+    .service-features li i {
+      color: var(--accent-gold);
+    }
+
+    .service-footer {
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .preparation-section {
+      background: var(--light-bg);
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .preparation-section {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+    }
+
+    @media (max-width: 640px) {
+      .section-header h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 968px) {
+      .prep-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .prep-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .prep-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .prep-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .prep-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .prep-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-showcase {
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .result-showcase {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .result-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .result-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .result-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .result-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .result-info {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .result-info h4 {
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .result-badge {
+      display: inline-block;
+      background: var(--accent-gold);
+      color: var(--primary-dark);
+      padding: 4px 12px;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .insight-section {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      padding: 5rem 0;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .insight-section {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 968px) {
+      .insight-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .insight-content h2 {
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .insight-content h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .insight-features {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+
+    .insight-features li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 968px) {
+      .insight-features li {
+        justify-content: center;
+      }
+    }
+
+    .insight-features li i {
+      color: var(--accent-gold);
+      font-size: 1.2rem;
+      margin-top: 0.2rem;
+    }
+
+    .insight-image img {
+      width: 100%;
+      border-radius: 28px;
+    }
+
+    .cta-section {
+      padding: 5rem 0;
+      background: var(--light-bg);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 2.5rem 0;
+      }
+      .cta-section h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cta-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 data-aos="fade-up">WAEC Excellence Services</h1>
+    <p data-aos="fade-up">Complete support for WAEC registration, preparation, and result processing</p>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<div class="container">
+  <div class="services-grid">
+    <div class="service-card" data-aos="fade-up">
+      <div class="service-header">
+        <i class="fas fa-edit"></i>
+        <h3>WAEC Registration</h3>
+      </div>
+      <div class="service-body">
+        <p>Seamless WAEC registration support with guaranteed successful enrollment.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check-circle"></i> Registration PIN Purchase</li>
+          <li><i class="fas fa-check-circle"></i> Biometric Capture</li>
+          <li><i class="fas fa-check-circle"></i> Subject Selection Guidance</li>
+          <li><i class="fas fa-check-circle"></i> Photo & Data Entry</li>
+        </ul>
+      </div>
+      <div class="service-footer">
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Register Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="service-header">
+        <i class="fas fa-chart-line"></i>
+        <h3>Result Services</h3>
+      </div>
+      <div class="service-body">
+        <p>Fast and reliable WAEC result checking and document processing.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check-circle"></i> Result Checking & Printing</li>
+          <li><i class="fas fa-check-circle"></i> Certificate Collection</li>
+          <li><i class="fas fa-check-circle"></i> Statement of Result</li>
+          <li><i class="fas fa-check-circle"></i> Result Verification</li>
+        </ul>
+      </div>
+      <div class="service-footer">
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Check Result <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="service-header">
+        <i class="fas fa-certificate"></i>
+        <h3>Certificate Processing</h3>
+      </div>
+      <div class="service-body">
+        <p>Get your original WAEC certificate or certified true copy quickly.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check-circle"></i> Original Certificate Collection</li>
+          <li><i class="fas fa-check-circle"></i> Certified True Copy (CTC)</li>
+          <li><i class="fas fa-check-circle"></i> Verification Letter</li>
+          <li><i class="fas fa-check-circle"></i> Express Processing Available</li>
+        </ul>
+      </div>
+      <div class="service-footer">
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Request Certificate <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preparation Section -->
+<section class="preparation-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>📚 WAEC Preparation Program</h2>
+      <p>Proven strategies for academic excellence and outstanding results</p>
+    </div>
+    <div class="prep-grid">
+      <div class="prep-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="prep-icon">
+          <i class="fas fa-chalkboard"></i>
+        </div>
+        <h3>Intensive Tutorials</h3>
+        <p>Comprehensive coverage of all subjects with experienced tutors who understand WAEC standards and marking schemes.</p>
+      </div>
+      <div class="prep-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="prep-icon">
+          <i class="fas fa-database"></i>
+        </div>
+        <h3>Comprehensive Materials</h3>
+        <p>20+ years of past questions analyzed with predicted topics and patterns based on thorough research.</p>
+      </div>
+      <div class="prep-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="prep-icon">
+          <i class="fas fa-tachometer-alt"></i>
+        </div>
+        <h3>Mock Examinations</h3>
+        <p>Simulated WAEC exams under real conditions with detailed performance analysis and improvement strategies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Insight Section -->
+<section class="insight-section">
+  <div class="container">
+    <div class="insight-grid">
+      <div class="insight-content" data-aos="fade-right">
+        <h2>🎯 Strategic Exam Preparation</h2>
+        <p>Our proprietary preparation methodology has helped thousands of students achieve exceptional WAEC results. We focus on:</p>
+        <ul class="insight-features">
+          <li><i class="fas fa-chart-line"></i> <strong>Pattern Recognition:</strong> Identifying recurring question patterns from past exams</li>
+          <li><i class="fas fa-clock"></i> <strong>Time Management:</strong> Strategic techniques for maximizing exam performance</li>
+          <li><i class="fas fa-brain"></i> <strong>Smart Learning:</strong> Memory retention techniques for key concepts</li>
+          <li><i class="fas fa-users"></i> <strong>Peer Learning:</strong> Collaborative study groups with top-performing students</li>
+        </ul>
+      </div>
+      <div class="insight-image" data-aos="fade-left">
+        <img src="{{ url_for('static', filename='images/waec-logo.png') }}" alt="WAEC Preparation" style="width: 100%; border-radius: 28px;" onerror="this.src='https://placehold.co/500x400/2C7A6E/white?text=WAEC+Prep'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Result Showcase -->
+<section class="result-showcase">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>🌟 Our Students' Success Stories</h2>
+      <p>Real results from real students who trusted I.A.E™ for their WAEC preparation</p>
+    </div>
+    <div class="result-grid">
+      <div class="result-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="result-image">
+          <img src="{{ url_for('static', filename='images/waec-results/student1.png') }}" alt="WAEC Result Sample 1" onerror="this.src='https://placehold.co/300x200/1E5A6F/white?text=8+A's'">
+        </div>
+        <div class="result-info">
+          <h4>Oluwaseun Adekunle</h4>
+          <span class="result-badge">7 A's, 2 B's</span>
+          <p style="font-size: 0.85rem; margin-top: 0.5rem;">"The preparation materials were incredibly helpful!"</p>
+        </div>
+      </div>
+      <div class="result-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="result-image">
+          <img src="{{ url_for('static', filename='images/waec-results/student2.png') }}" alt="WAEC Result Sample 2" onerror="this.src='https://placehold.co/300x200/2C7A6E/white?text=7+A's'">
+        </div>
+        <div class="result-info">
+          <h4>Fatima Mohammed</h4>
+          <span class="result-badge">1 A, 6 B's, 2 C's</span>
+          <p style="font-size: 0.85rem; margin-top: 0.5rem;">"The mock exams prepared me for the real thing!"</p>
+        </div>
+      </div>
+      <div class="result-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="result-image">
+          <img src="{{ url_for('static', filename='images/waec-results/student3.png') }}" alt="WAEC Result Sample 3" onerror="this.src='https://placehold.co/300x200/1E5A6F/white?text=6+A's'">
+        </div>
+        <div class="result-info">
+          <h4>David Okafor</h4>
+          <span class="result-badge">4 A's, 4 B's, 1 C</span>
+          <p style="font-size: 0.85rem; margin-top: 0.5rem;">"Excellent tutors and comprehensive materials!"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2 data-aos="fade-up">Ready to Ace Your WAEC?</h2>
+    <p data-aos="fade-up">Join our proven preparation program and join the ranks of our successful students</p>
+    <a href="{{ url_for('contact') }}" class="btn btn-primary" data-aos="fade-up">Enroll Now <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+console.log('📚 WAEC Page Loaded | I.A.E™ — Excellence in Every Exam');
+</script>
+{% endblock %}

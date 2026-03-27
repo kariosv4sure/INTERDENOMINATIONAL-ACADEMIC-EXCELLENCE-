@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}I.A.E™ - Academic Excellence{% endblock %}</title>
+    <meta name="description" content="INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™ - Your trusted partner for educational success in Nigeria">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="IAE Logo" class="logo-img" onerror="this.src='https://placehold.co/60x60/1E5A6F/white?text=IAE'">
+                <span class="logo-text">I.A.E™</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}>About</a></li>
+                <li><a href="{{ url_for('services') }}" {% if request.endpoint == 'services' %}class="active"{% endif %}>Services</a></li>
+                <li><a href="{{ url_for('jamb') }}" {% if request.endpoint == 'jamb' %}class="active"{% endif %}>JAMB</a></li>
+                <li><a href="{{ url_for('waec') }}" {% if request.endpoint == 'waec' %}class="active"{% endif %}>WAEC</a></li>
+                <li><a href="{{ url_for('testimonials') }}" {% if request.endpoint == 'testimonials' %}class="active"{% endif %}>Testimonials</a></li>
+                <li><a href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}class="active"{% endif %}>Contact</a></li>
+                
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_admin %}
+                        <li><a href="{{ url_for('admin_dashboard') }}">Admin</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('chat') }}">AI Chat</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}" style="padding: 1rem; margin: 1rem auto; max-width: 1200px; border-radius: 12px; text-align: center;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>I.A.E™</h3>
+                    <p>INTERDENOMINATIONAL ACADEMIC EXCELLENCE — Excellence is not a promise, it's our standard.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1AvQ25seSk/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://whatsapp.com/channel/0029VakXg6oFCCoUDIhCaq2R" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://t.me/Moses_Fi" target="_blank"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('services') }}">Services</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="{{ url_for('jamb') }}">JAMB Services</a></li>
+                        <li><a href="{{ url_for('waec') }}">WAEC Services</a></li>
+                        <li><a href="{{ url_for('services') }}">O'LEVEL Services</a></li>
+                        <li><a href="{{ url_for('services') }}">Certificates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 07079396111</li>
+                        <li><i class="fas fa-phone"></i> 08163065109</li>
+                        <li><i class="fas fa-envelope"></i> mosesdanielfiyinfoluwa08@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

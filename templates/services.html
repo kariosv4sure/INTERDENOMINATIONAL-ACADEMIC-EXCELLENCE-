@@ -1,0 +1,801 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services | I.A.E™ - Comprehensive Educational Solutions{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ========================================
+       PAGE HEADER
+       ======================================== */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      padding: 5rem 0 4rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(230, 185, 30, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 3rem 0;
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* ========================================
+       SERVICE CATEGORIES
+       ======================================== */
+    .services-overview {
+      padding: 5rem 0;
+      background: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .services-overview {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .tab-btn {
+      padding: 12px 28px;
+      background: var(--gray-200);
+      border: none;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--gray-600);
+    }
+
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: white;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    @media (max-width: 640px) {
+      .tab-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-header {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .service-header i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-header h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-badge {
+      display: inline-block;
+      background: var(--accent-gold);
+      color: var(--primary-dark);
+      padding: 4px 12px;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .service-body {
+      padding: 1.5rem;
+    }
+
+    .service-body p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .service-features {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+
+    .service-features li i {
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+    }
+
+    .service-price {
+      margin: 1rem 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .price-tag {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .price-note {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+    }
+
+    .service-footer {
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    /* ========================================
+       POPULAR SERVICES SECTION
+       ======================================== */
+    .popular-services {
+      padding: 5rem 0;
+      background: var(--light-bg);
+    }
+
+    @media (max-width: 768px) {
+      .popular-services {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+    }
+
+    .section-header p {
+      color: var(--gray-600);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 640px) {
+      .section-header h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .popular-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .popular-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .popular-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gold);
+    }
+
+    .popular-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .popular-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .popular-icon i {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .popular-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .popular-card p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .popular-features {
+      list-style: none;
+      text-align: left;
+      margin: 1rem 0;
+    }
+
+    .popular-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+
+    .popular-features li i {
+      color: var(--accent-gold);
+    }
+
+    /* ========================================
+       PRICING SECTION
+       ======================================== */
+    .pricing-section {
+      padding: 5rem 0;
+      background: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .pricing-section {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--accent-gold);
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 968px) {
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--accent-gold);
+      color: var(--primary-dark);
+      padding: 4px 16px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gray-400);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .pricing-features li i {
+      width: 20px;
+    }
+
+    .pricing-features li i.fa-check {
+      color: #2ecc71;
+    }
+
+    .pricing-features li i.fa-times {
+      color: #e74c3c;
+    }
+
+    /* ========================================
+       CTA SECTION
+       ======================================== */
+    .cta-section {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 3rem 0;
+      }
+      .cta-section h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cta-section h2 {
+      color: white;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-section .btn-primary {
+      background: var(--accent-gold);
+      color: var(--primary-dark);
+    }
+
+    .cta-section .btn-primary:hover {
+      background: #f0c43b;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 data-aos="fade-up">Our Services</h1>
+    <p data-aos="fade-up" data-aos-delay="100">Comprehensive educational solutions tailored to your academic journey</p>
+  </div>
+</section>
+
+<!-- Services Overview with Tabs -->
+<section class="services-overview">
+  <div class="container">
+    <div class="category-tabs" data-aos="fade-up">
+      <button class="tab-btn active" data-category="all">All Services</button>
+      <button class="tab-btn" data-category="exam">Exam Services</button>
+      <button class="tab-btn" data-category="certificate">Certificates</button>
+      <button class="tab-btn" data-category="admission">Admission</button>
+      <button class="tab-btn" data-category="tutorial">Tutorials</button>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+      <!-- O'LEVEL Services -->
+      <div class="service-card" data-category="exam" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-header">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>O'LEVEL Services</h3>
+          <span class="service-badge">WAEC | NECO | NABTEB | NBAIS</span>
+        </div>
+        <div class="service-body">
+          <p>Complete O'LEVEL support for all Nigerian examination bodies. Fast, reliable, and secure services.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check-circle"></i> Registration e-PINs & Scratch Cards</li>
+            <li><i class="fas fa-check-circle"></i> Result Checking & Printing</li>
+            <li><i class="fas fa-check-circle"></i> Certificate Issuance & Verification</li>
+            <li><i class="fas fa-check-circle"></i> Statement of Result Processing</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-tag">From ₦2,500</span>
+            <span class="price-note"> per service</span>
+          </div>
+        </div>
+        <div class="service-footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary" style="width: 100%;">Request Service <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- JAMB Services -->
+      <div class="service-card" data-category="exam" data-aos="fade-up" data-aos-delay="150">
+        <div class="service-header">
+          <i class="fas fa-university"></i>
+          <h3>JAMB Services</h3>
+          <span class="service-badge">UTME | DE | CAPS</span>
+        </div>
+        <div class="service-body">
+          <p>End-to-end JAMB support from registration to admission approval on CAPS.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check-circle"></i> UTME/DE e-PINs & Profile Codes</li>
+            <li><i class="fas fa-check-circle"></i> CAPS Issues Resolution</li>
+            <li><i class="fas fa-check-circle"></i> Result Printing & Admission Letters</li>
+            <li><i class="fas fa-check-circle"></i> Course Change & Institution Transfer</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-tag">From ₦3,500</span>
+            <span class="price-note"> per service</span>
+          </div>
+        </div>
+        <div class="service-footer">
+          <a href="{{ url_for('jamb') }}" class="btn btn-primary" style="width: 100%;">Learn More <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- A'LEVEL Services -->
+      <div class="service-card" data-category="exam" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-header">
+          <i class="fas fa-chalkboard-user"></i>
+          <h3>A'LEVEL Services</h3>
+          <span class="service-badge">IJMB | JUPEB | Cambridge</span>
+        </div>
+        <div class="service-body">
+          <p>Advanced level programs and international exam preparation for university admission.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check-circle"></i> IJMB & JUPEB Registration</li>
+            <li><i class="fas fa-check-circle"></i> Cambridge, IELTS, SAT, GRE, TOEFL</li>
+            <li><i class="fas fa-check-circle"></i> Study Materials & Past Questions</li>
+            <li><i class="fas fa-check-circle"></i> Full Tutorial Support</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-tag">From ₦15,000</span>
+            <span class="price-note"> per program</span>
+          </div>
+        </div>
+        <div class="service-footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary" style="width: 100%;">Enroll Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Certificates Services -->
+      <div class="service-card" data-category="certificate" data-aos="fade-up" data-aos-delay="250">
+        <div class="service-header">
+          <i class="fas fa-file-alt"></i>
+          <h3>Certificates</h3>
+          <span class="service-badge">State of Origin | Birth</span>
+        </div>
+        <div class="service-body">
+          <p>Fast and reliable certificate processing for all Nigerian states and local government areas.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check-circle"></i> State of Origin Certificate</li>
+            <li><i class="fas fa-check-circle"></i> Birth Certificate (NPC/National Population Commission)</li>
+            <li><i class="fas fa-check-circle"></i> Local Government Identification</li>
+            <li><i class="fas fa-check-circle"></i> Available for ALL 36 States + FCT</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-tag">From ₦5,000</span>
+            <span class="price-note"> per certificate</span>
+          </div>
+        </div>
+        <div class="service-footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary" style="width: 100%;">Order Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Admission Processing -->
+      <div class="service-card" data-category="admission" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-header">
+          <i class="fas fa-users"></i>
+          <h3>Admission Processing</h3>
+          <span class="service-badge">Post-UTME | Mentorship</span>
+        </div>
+        <div class="service-body">
+          <p>Expert guidance to secure your admission into Nigerian universities, polytechnics, and colleges.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check-circle"></i> Post-UTME Forms & Registration</li>
+            <li><i class="fas fa-check-circle"></i> School & Course Selection Guidance</li>
+            <li><i class="fas fa-check-circle"></i> Admission Mentorship Program</li>
+            <li><i class="fas fa-check-circle"></i> Course Change & Transfer Processing</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-tag">From ₦10,000</span>
+            <span class="price-note"> full package</span>
+          </div>
+        </div>
+        <div class="service-footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary" style="width: 100%;">Get Started <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- NIN Services -->
+      <div class="service-card" data-category="certificate" data-aos="fade-up" data-aos-delay="350">
+        <div class="service-header">
+          <i class="fas fa-id-card"></i>
+          <h3>NIN Services</h3>
+          <span class="service-badge">NIMC | Biometrics</span>
+        </div>
+        <div class="service-body">
+          <p>Complete NIN registration, modification, and linkage services for all your educational needs.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check-circle"></i> NIN Enrollment & Registration</li>
+            <li><i class="fas fa-check-circle"></i> NIN Modification & Updates</li>
+            <li><i class="fas fa-check-circle"></i> NIN Slip Printing</li>
+            <li><i class="fas fa-check-circle"></i> JAMB-WAEC NIN Linkage</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-tag">From ₦3,000</span>
+            <span class="price-note"> per service</span>
+          </div>
+        </div>
+        <div class="service-footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary" style="width: 100%;">Book Appointment <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Services Section -->
+<section class="popular-services">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>🔥 Most Popular Services</h2>
+      <p>Trusted by thousands of Nigerian students for their academic needs</p>
+    </div>
+    <div class="popular-grid">
+      <div class="popular-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="popular-icon">
+          <i class="fas fa-edit"></i>
+        </div>
+        <h3>JAMB UTME Registration</h3>
+        <p>Complete JAMB registration with profile code, e-PIN, and biometric capture</p>
+        <ul class="popular-features">
+          <li><i class="fas fa-check"></i> Profile Code Generation</li>
+          <li><i class="fas fa-check"></i> UTME e-PIN</li>
+          <li><i class="fas fa-check"></i> Biometric Capture</li>
+          <li><i class="fas fa-check"></i> Result Checking Included</li>
+        </ul>
+        <a href="{{ url_for('jamb') }}" class="btn btn-outline">Learn More</a>
+      </div>
+
+      <div class="popular-card" data-aos="fade-up" data-aos-delay="150">
+        <div class="popular-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>WAEC Result Upgrade</h3>
+        <p>Fast and reliable WAEC result checking, printing, and certificate processing</p>
+        <ul class="popular-features">
+          <li><i class="fas fa-check"></i> Result Checking & Printing</li>
+          <li><i class="fas fa-check"></i> Certificate Issuance</li>
+          <li><i class="fas fa-check"></i> Statement of Result</li>
+          <li><i class="fas fa-check"></i> Verification Services</li>
+        </ul>
+        <a href="{{ url_for('waec') }}" class="btn btn-outline">Learn More</a>
+      </div>
+
+      <div class="popular-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="popular-icon">
+          <i class="fas fa-file-signature"></i>
+        </div>
+        <h3>State of Origin</h3>
+        <p>Authentic State of Origin and Birth Certificates for all Nigerian states</p>
+        <ul class="popular-features">
+          <li><i class="fas fa-check"></i> All 36 States + FCT</li>
+          <li><i class="fas fa-check"></i> Fast Processing (3-5 days)</li>
+          <li><i class="fas fa-check"></i> Official Letterhead</li>
+          <li><i class="fas fa-check"></i> Delivery Available</li>
+        </ul>
+        <a href="{{ url_for('contact') }}" class="btn btn-outline">Order Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>💰 Affordable Pricing Plans</h2>
+      <p>Quality educational services at prices that won't break the bank</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Basic</h3>
+        <div class="price">₦5,000 <span>/ service</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> Single Service Request</li>
+          <li><i class="fas fa-check"></i> 24-48 Hour Processing</li>
+          <li><i class="fas fa-check"></i> Email Support</li>
+          <li><i class="fas fa-times"></i> Priority Processing</li>
+          <li><i class="fas fa-times"></i> Free Consultation</li>
+        </ul>
+        <a href="{{ url_for('contact') }}" class="btn btn-outline">Get Started</a>
+      </div>
+
+      <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+        <div class="pricing-badge">Most Popular</div>
+        <h3>Premium</h3>
+        <div class="price">₦25,000 <span>/ package</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> 3 Services Included</li>
+          <li><i class="fas fa-check"></i> 12-24 Hour Processing</li>
+          <li><i class="fas fa-check"></i> Priority Support</li>
+          <li><i class="fas fa-check"></i> Free Consultation</li>
+          <li><i class="fas fa-check"></i> Admission Guidance</li>
+        </ul>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Choose Plan</a>
+      </div>
+
+      <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>Ultimate</h3>
+        <div class="price">₦50,000 <span>/ full package</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> All Services Included</li>
+          <li><i class="fas fa-check"></i> Express 6-12 Hour Processing</li>
+          <li><i class="fas fa-check"></i> 24/7 Dedicated Support</li>
+          <li><i class="fas fa-check"></i> Personalized Mentorship</li>
+          <li><i class="fas fa-check"></i> Guaranteed Admission Support</li>
+        </ul>
+        <a href="{{ url_for('contact') }}" class="btn btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2 data-aos="fade-up">Need a Custom Package?</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Contact us for personalized service bundles tailored to your specific needs</p>
+    <a href="{{ url_for('contact') }}" class="btn btn-primary" data-aos="fade-up" data-aos-delay="200">Talk to Our Team <i class="fas fa-headset"></i></a>
+  </div>
+</section>
+
+<script>
+// Category Filter Tabs
+const tabBtns = document.querySelectorAll('.tab-btn');
+const serviceCards = document.querySelectorAll('.service-card');
+
+if (tabBtns.length > 0) {
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active tab
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const category = btn.getAttribute('data-category');
+
+      // Filter cards
+      serviceCards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+    });
+  });
+}
+
+console.log('🎓 Services Page Loaded | I.A.E™ — Your Educational Partner');
+</script>
+{% endblock %}

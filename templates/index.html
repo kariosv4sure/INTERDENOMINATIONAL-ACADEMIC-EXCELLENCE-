@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Home | I.A.E™ - Educational Excellence{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
+      <h1>Your Success Is <span class="highlight">Our Mission</span></h1>
+      <p>INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™ — Your trusted partner on the journey to academic excellence in Nigeria. From JAMB to WAEC, we deliver results.</p>
+      <div class="hero-buttons">
+        <a href="{{ url_for('services') }}" class="btn btn-primary">Explore Services <i class="fas fa-arrow-right"></i></a>
+        <a href="{{ url_for('contact') }}" class="btn btn-outline">Get Started</a>
+      </div>
+    </div>
+    <div class="hero-stats" data-aos="fade-left" data-aos-delay="200">
+      <div class="stat-card">
+        <div class="stat-number" data-count="28700">0</div>
+        <div class="stat-label">Students Enrolled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="97">0</div>
+        <div class="stat-label">Success Rate %</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="6200">0</div>
+        <div class="stat-label">University Admits</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Preview -->
+<section class="about-preview">
+  <div class="container">
+    <div class="about-grid" data-aos="fade-up">
+      <div class="about-image">
+        <img src="{{ url_for('static', filename='images/owner.png') }}" alt="Mr. Daniel - Founder & CEO" onerror="this.src='https://placehold.co/500x600/2C7A6E/white?text=Mr.+Daniel'">
+      </div>
+      <div class="about-content">
+        <h2>Meet Mr. Daniel</h2>
+        <p class="title-tag">Founder & CEO, I.A.E™</p>
+        <p>INTERDENOMINATIONAL ACADEMIC EXCELLENCE™️ is more than just a coaching platform — we are your partner in securing admission and achieving top grades.</p>
+        <p>Since 2016, we've guided thousands of Nigerian students through JAMB, WAEC, NECO, and IJMB. Our hybrid approach blends expert-led classes with digital resources, ensuring each student gets personalized mentorship.</p>
+        <a href="{{ url_for('about') }}" class="btn btn-secondary">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Services -->
+<section class="quick-services">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>Our Premium Services</h2>
+      <p>Everything education — seamless, reliable, professional</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>O'LEVEL Services</h3>
+        <p>WAEC, NECO, NABTEB, NBAIS — Scratch cards, result checking, certificates & verification.</p>
+      </div>
+      <div class="service-card" data-aos="zoom-in" data-aos-delay="150">
+        <i class="fas fa-university"></i>
+        <h3>JAMB Services</h3>
+        <p>UTME/DE e-PINs, CAPS resolution, result printing, admission letters, profile codes.</p>
+      </div>
+      <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+        <i class="fas fa-chalkboard-user"></i>
+        <h3>A'LEVEL Services</h3>
+        <p>IJMB, JUPEB, Cambridge, IELTS, SAT, GRE, TOEFL — full support from registration to certification.</p>
+      </div>
+      <div class="service-card" data-aos="zoom-in" data-aos-delay="250">
+        <i class="fas fa-file-alt"></i>
+        <h3>Certificates</h3>
+        <p>State of Origin & Birth Certificates for ALL states & LGAs in Nigeria — swift delivery.</p>
+      </div>
+      <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+        <i class="fas fa-users"></i>
+        <h3>Admission Processing</h3>
+        <p>Post-UTME forms, mentorship, course change, school choice guidance — end-to-end support.</p>
+      </div>
+      <div class="service-card" data-aos="zoom-in" data-aos-delay="350">
+        <i class="fas fa-id-card"></i>
+        <h3>NIN & Biometrics</h3>
+        <p>All NIN enrollment and linkage services, biometric capturing for exams.</p>
+      </div>
+    </div>
+    <div class="text-center" style="margin-top: 2.5rem;">
+      <a href="{{ url_for('services') }}" class="btn btn-primary">View All Services →</a>
+    </div>
+  </div>
+</section>
+
+<!-- JAMB Tutorial Highlight -->
+<section class="jamb-highlight">
+  <div class="container">
+    <div class="jamb-box" data-aos="flip-up">
+      <div class="jamb-content">
+        <h2>🎓 JAMB & Post-UTME Masterclass</h2>
+        <p>Are you targeting 280+ in JAMB and a guaranteed admission? Join the most result-driven tutorial in Nigeria.</p>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Experienced & passionate tutors</li>
+          <li><i class="fas fa-check-circle"></i> 20+ years of past questions & likely exams</li>
+          <li><i class="fas fa-check-circle"></i> Smart teaching methods + mock exams</li>
+          <li><i class="fas fa-check-circle"></i> Focused classes & mentorship till admission</li>
+        </ul>
+        <a href="{{ url_for('jamb') }}" class="btn btn-primary">Enroll Now <i class="fas fa-rocket"></i></a>
+      </div>
+      <div class="jamb-image">
+        <img src="{{ url_for('static', filename='images/jamb-logo.png') }}" alt="JAMB Prep" onerror="this.src='https://placehold.co/300x250/1E5A6F/white?text=JAMB+Prep'">
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

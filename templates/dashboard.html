@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | I.A.E™{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-header {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        padding: 3rem 0;
+        color: white;
+    }
+    
+    .dashboard-header h1 {
+        color: white;
+        margin-bottom: 0.5rem;
+    }
+    
+    .dashboard-stats {
+        padding: 3rem 0;
+        background: var(--light-bg);
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .stat-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 24px;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary-light), var(--primary));
+        border-radius: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+    }
+    
+    .stat-icon i {
+        font-size: 1.8rem;
+        color: white;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+    }
+    
+    .stat-label {
+        color: var(--gray-600);
+        font-size: 0.9rem;
+    }
+    
+    .quick-actions {
+        padding: 3rem 0;
+    }
+    
+    .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .action-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 24px;
+        text-align: center;
+        transition: var(--transition);
+        border: 1px solid var(--gray-200);
+        text-decoration: none;
+        display: block;
+    }
+    
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary);
+    }
+    
+    .action-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+    
+    .action-card h3 {
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+    }
+    
+    .action-card p {
+        color: var(--gray-600);
+        font-size: 0.9rem;
+    }
+    
+    .recent-chats {
+        padding: 3rem 0;
+        background: var(--light-bg);
+    }
+    
+    .chat-list {
+        margin-top: 1.5rem;
+    }
+    
+    .chat-item {
+        background: var(--white);
+        padding: 1rem;
+        border-radius: 16px;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .chat-preview {
+        flex: 1;
+    }
+    
+    .chat-preview p {
+        color: var(--gray-600);
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .chat-date {
+        font-size: 0.7rem;
+        color: var(--gray-400);
+    }
+    
+    .chat-badge {
+        background: var(--accent-gold);
+        color: var(--primary-dark);
+        padding: 4px 12px;
+        border-radius: 60px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+    
+    .btn-sm {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+    }
+    
+    @media (max-width: 640px) {
+        .chat-item {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div class="container">
+        <h1 data-aos="fade-up">Welcome back, {{ user.full_name or user.username }}! 👋</h1>
+        <p data-aos="fade-up">Your academic journey continues. Let's achieve excellence together.</p>
+    </div>
+</section>
+
+<section class="dashboard-stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card" data-aos="fade-up">
+                <div class="stat-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="stat-number">{{ total_chats }}</div>
+                <div class="stat-label">Total AI Conversations</div>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-number">{{ user.created_at.strftime('%b %d, %Y') }}</div>
+                <div class="stat-label">Member Since</div>
+            </div>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number">97%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="quick-actions">
+    <div class="container">
+        <h2 data-aos="fade-up">Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="{{ url_for('chat') }}" class="action-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="action-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI Assistant</h3>
+                <p>Chat with our AI academic advisor for JAMB, WAEC, and admission guidance</p>
+            </a>
+            <a href="{{ url_for('services') }}" class="action-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="action-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>Explore Services</h3>
+                <p>Discover our JAMB, WAEC, and admission processing services</p>
+            </a>
+            <a href="{{ url_for('contact') }}" class="action-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="action-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Contact Support</h3>
+                <p>Need help? Our team is ready to assist you</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="recent-chats">
+    <div class="container">
+        <h2 data-aos="fade-up">Recent Conversations</h2>
+        {% if chats %}
+            <div class="chat-list">
+                {% for chat in chats %}
+                <div class="chat-item" data-aos="fade-up">
+                    <div class="chat-preview">
+                        <p><strong>You:</strong> {{ chat.user_message[:80] }}{% if chat.user_message|length > 80 %}...{% endif %}</p>
+                        <p><strong>I.A.E Assistant:</strong> {{ chat.bot_response[:100] }}{% if chat.bot_response|length > 100 %}...{% endif %}</p>
+                        <div class="chat-date">{{ chat.created_at.strftime('%B %d, %Y at %I:%M %p') }}</div>
+                    </div>
+                    <a href="{{ url_for('chat') }}" class="btn btn-outline btn-sm">View All</a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center" style="padding: 3rem; background: var(--white); border-radius: 24px;">
+                <i class="fas fa-comment-dots" style="font-size: 3rem; color: var(--gray-400); margin-bottom: 1rem;"></i>
+                <p style="color: var(--gray-600);">No conversations yet. Start chatting with our AI assistant!</p>
+                <a href="{{ url_for('chat') }}" class="btn btn-primary" style="margin-top: 1rem;">Start Chatting <i class="fas fa-arrow-right"></i></a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

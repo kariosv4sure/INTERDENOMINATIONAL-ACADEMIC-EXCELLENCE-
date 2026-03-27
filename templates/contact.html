@@ -1,0 +1,506 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us | I.A.E™ - Get in Touch{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      padding: 4rem 0;
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 3rem 0;
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      .page-header p {
+        font-size: 1rem;
+        padding: 0 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-section {
+      padding: 4rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .contact-section {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 968px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .contact-info {
+      background: var(--light-bg);
+      padding: 1.8rem;
+      border-radius: 28px;
+    }
+
+    @media (max-width: 480px) {
+      .contact-info {
+        padding: 1.2rem;
+      }
+    }
+
+    .contact-info h2 {
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+    }
+
+    @media (max-width: 480px) {
+      .contact-info h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .info-card {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: var(--white);
+      border-radius: 20px;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 480px) {
+      .info-card {
+        padding: 0.8rem;
+        gap: 0.8rem;
+      }
+    }
+
+    .info-card:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      .info-icon {
+        width: 40px;
+        height: 40px;
+      }
+      .info-icon i {
+        font-size: 1rem;
+      }
+    }
+
+    .info-icon i {
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    .info-content h4 {
+      margin-bottom: 0.3rem;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .info-content p {
+      color: var(--gray-600);
+      font-size: 0.85rem;
+      word-break: break-word;
+    }
+
+    .whatsapp-direct {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      padding: 1.2rem;
+      border-radius: 20px;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .whatsapp-direct {
+        padding: 1rem;
+      }
+      .whatsapp-direct h4 {
+        font-size: 1rem;
+      }
+      .whatsapp-direct p {
+        font-size: 0.85rem;
+      }
+    }
+
+    .social-media {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (max-width: 480px) {
+      .social-link {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .contact-form {
+      background: var(--white);
+      padding: 1.8rem;
+      border-radius: 28px;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 480px) {
+      .contact-form {
+        padding: 1.2rem;
+      }
+      .contact-form h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid var(--gray-200);
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      background: var(--white);
+    }
+
+    @media (max-width: 480px) {
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .submit-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .success-message {
+      background: #25D366;
+      color: white;
+      padding: 1rem;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      display: none;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Fix for iOS input zoom */
+    @media (max-width: 480px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 data-aos="fade-up">Get In Touch</h1>
+    <p data-aos="fade-up">We're here to help you achieve academic excellence. Reach out to us today!</p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info" data-aos="fade-right">
+        <h2>Contact Information</h2>
+        <p>Have questions? Need assistance? Our team is ready to help you with all your educational needs.</p>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <div class="info-content">
+            <h4>WhatsApp Business</h4>
+            <p>+234 707 939 6111</p>
+            <p>Click the button below to chat with us directly</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <div class="info-content">
+            <h4>Phone Numbers</h4>
+            <p>07079396111</p>
+            <p>08163065109</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="info-content">
+            <h4>Email Address</h4>
+            <p>mosesdanielfiyinfoluwa08@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="info-content">
+            <h4>Business Hours</h4>
+            <p>Mon-Fri: 9am - 6pm</p>
+            <p>Sat: 10am - 2pm</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+
+        <div class="whatsapp-direct">
+          <i class="fab fa-whatsapp" style="font-size: 1.8rem;"></i>
+          <h4>Quick WhatsApp Chat</h4>
+          <p>Click below to start a conversation instantly</p>
+          <a href="https://wa.me/2347079396111?text=Hello%21%20I%20need%20assistance%20with%20I.A.E%20services"
+             target="_blank"
+             class="btn btn-whatsapp"
+             style="background: white; color: #25D366; border: 2px solid white;">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+        </div>
+
+        <div class="social-media">
+          <h4>Connect With Us</h4>
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/1AvQ25seSk/" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://whatsapp.com/channel/0029VakXg6oFCCoUDIhCaq2R" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/Moses_Fi" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form" data-aos="fade-left">
+        <h2>Send Us a Message</h2>
+        <p>Fill out the form below and we'll connect with you on WhatsApp</p>
+
+        <div id="successMessage" class="success-message">
+          <i class="fas fa-check-circle"></i> Redirecting to WhatsApp...
+        </div>
+
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email address">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required placeholder="Enter your WhatsApp number">
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service Interested In *</label>
+            <select id="service" name="service" required>
+              <option value="">Select a service</option>
+              <option value="JAMB Registration/Tutorial">JAMB Registration/Tutorial</option>
+              <option value="WAEC Services">WAEC Services</option>
+              <option value="O'LEVEL Services">O'LEVEL Services</option>
+              <option value="Certificates">Certificates (State of Origin/Birth)</option>
+              <option value="Admission Processing">Admission Processing</option>
+              <option value="NIN Services">NIN Services</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required placeholder="Tell us how we can help you..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-whatsapp submit-btn">
+            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: var(--gray-400);">
+          <i class="fas fa-lock"></i> Your information will be sent securely via WhatsApp
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// WhatsApp Form Submission
+const contactForm = document.getElementById('contactForm');
+const successMessage = document.getElementById('successMessage');
+const WHATSAPP_NUMBER = '2347079396111';
+
+const serviceMap = {
+  'JAMB Registration/Tutorial': '📚 JAMB Registration/Tutorial',
+  'WAEC Services': '📝 WAEC Services',
+  'O\'LEVEL Services': '🎓 O\'LEVEL Services',
+  'Certificates': '📄 Certificates',
+  'Admission Processing': '🏛️ Admission Processing',
+  'NIN Services': '🆔 NIN Services',
+  'Other': '❓ Other Inquiry'
+};
+
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email || !phone || !service || !message) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    const serviceDisplay = serviceMap[service] || service;
+
+    const whatsappMessage = `*NEW INQUIRY FROM I.A.E WEBSITE*
+
+👤 *Name:* ${name}
+📧 *Email:* ${email}
+📱 *Phone:* ${phone}
+🎯 *Service:* ${serviceDisplay}
+💬 *Message:* ${message}
+---
+*Sent via I.A.E Contact Form*`;
+
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+    successMessage.style.display = 'block';
+
+    setTimeout(() => {
+      window.open(whatsappURL, '_blank');
+      contactForm.reset();
+
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+    }, 800);
+  });
+}
+
+console.log('📞 Contact Page Loaded | Fully Responsive | WhatsApp Integration Active');
+</script>
+{% endblock %}

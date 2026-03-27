@@ -1,0 +1,587 @@
+{% extends "base.html" %}
+
+{% block title %}About Us | I.A.E™ - Our Story & Mission{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ========================================
+   PAGE HEADER
+   ======================================== */
+.page-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  padding: 5rem 0 4rem;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(230, 185, 30, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.page-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   ABOUT STORY SECTION
+   ======================================== */
+.about-story {
+  padding: 6rem 0;
+  background: var(--white);
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.story-image {
+  position: relative;
+}
+
+.story-image img {
+  width: 100%;
+  border-radius: 32px;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.4s;
+}
+
+.story-image:hover img {
+  transform: scale(1.02);
+}
+
+.story-image .badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--accent-gold);
+  padding: 1rem 1.5rem;
+  border-radius: 60px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.story-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.story-content p {
+  color: var(--gray-600);
+  margin-bottom: 1.2rem;
+}
+
+.story-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-light);
+  font-family: 'Space Grotesk', monospace;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+}
+
+/* ========================================
+   MISSION & VISION
+   ======================================== */
+.mission-vision {
+  padding: 6rem 0;
+  background: var(--light-bg);
+}
+
+.mv-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.mv-card {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 32px;
+  text-align: center;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.mv-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+}
+
+.mv-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.mv-icon i {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.mv-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.mv-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* ========================================
+   CORE VALUES
+   ======================================== */
+.core-values {
+  padding: 6rem 0;
+  background: var(--white);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.4rem;
+  margin-bottom: 0.8rem;
+  color: var(--primary);
+}
+
+.section-header p {
+  color: var(--gray-600);
+  font-size: 1.1rem;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.value-card {
+  background: var(--light-bg);
+  padding: 2rem;
+  border-radius: 28px;
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  background: white;
+}
+
+.value-icon {
+  font-size: 2.5rem;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
+.value-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.value-card p {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+}
+
+/* ========================================
+   TEAM SECTION
+   ======================================== */
+.team-section {
+  padding: 6rem 0;
+  background: var(--light-bg);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.team-card {
+  background: var(--white);
+  border-radius: 32px;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+}
+
+.team-image {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+.team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.team-card:hover .team-image img {
+  transform: scale(1.05);
+}
+
+.team-info {
+  padding: 1.5rem;
+}
+
+.team-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.team-title {
+  color: var(--accent-gold);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.team-bio {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.team-social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.team-social a {
+  color: var(--gray-400);
+  transition: var(--transition);
+  font-size: 1.1rem;
+}
+
+.team-social a:hover {
+  color: var(--primary);
+}
+
+/* ========================================
+   CTA SECTION
+   ======================================== */
+.cta-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  text-align: center;
+  color: white;
+}
+
+.cta-section h2 {
+  color: white;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.cta-section .btn-primary {
+  background: var(--accent-gold);
+  color: var(--primary-dark);
+}
+
+.cta-section .btn-primary:hover {
+  background: #f0c43b;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 968px) {
+  .story-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .mv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-stats {
+    justify-content: center;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 data-aos="fade-up">About I.A.E™</h1>
+    <p data-aos="fade-up" data-aos-delay="100">Discover the story behind Nigeria's most trusted academic excellence platform</p>
+  </div>
+</section>
+
+<!-- About Story Section -->
+<section class="about-story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-image" data-aos="fade-right">
+        <img src="{{ url_for('static', filename='images/owner.png') }}" alt="Mr. Daniel - Founder" onerror="this.src='https://placehold.co/500x600/2C7A6E/white?text=Mr.+Daniel'">
+        <div class="badge">
+          <i class="fas fa-crown"></i> Since 2016
+        </div>
+      </div>
+      <div class="story-content" data-aos="fade-left">
+        <h2>Our Journey to Excellence</h2>
+        <p>INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™ was born from a simple but powerful vision: to provide every Nigerian student with access to quality education and admission guidance, regardless of their background or location.</p>
+        <p>Founded by Mr. Daniel Moses, a passionate educator with over 12 years of experience in academic coaching, I.A.E has grown from a small tutorial center into a comprehensive educational ecosystem serving thousands of students across Nigeria.</p>
+        <p>What sets us apart is our commitment to personalized mentorship. We don't just teach; we walk with our students every step of the way — from exam preparation to university admission and beyond.</p>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-count="9">0</div>
+            <div class="stat-label">Years of Excellence</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="100">0</div>
+            <div class="stat-label">Expert Tutors</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="50">0</div>
+            <div class="stat-label">Partner Schools</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="mission-vision">
+  <div class="container">
+    <div class="mv-grid">
+      <div class="mv-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="mv-icon">
+          <i class="fas fa-bullseye"></i>
+        </div>
+        <h3>Our Mission</h3>
+        <p>To democratize academic excellence in Nigeria by providing affordable, accessible, and result-driven educational services that empower students to achieve their full potential and secure admission into their dream institutions.</p>
+      </div>
+      <div class="mv-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="mv-icon">
+          <i class="fas fa-eye"></i>
+        </div>
+        <h3>Our Vision</h3>
+        <p>To become Nigeria's most trusted educational partner, creating a generation of academically excellent students who lead with integrity, innovation, and a passion for lifelong learning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Values -->
+<section class="core-values">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>Our Core Values</h2>
+      <p>The principles that guide everything we do</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card" data-aos="zoom-in" data-aos-delay="100">
+        <div class="value-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h3>Excellence</h3>
+        <p>We pursue excellence in every service, every tutorial, and every interaction with our students.</p>
+      </div>
+      <div class="value-card" data-aos="zoom-in" data-aos-delay="150">
+        <div class="value-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h3>Integrity</h3>
+        <p>We operate with transparency, honesty, and ethical practices in all our dealings.</p>
+      </div>
+      <div class="value-card" data-aos="zoom-in" data-aos-delay="200">
+        <div class="value-icon">
+          <i class="fas fa-hand-holding-heart"></i>
+        </div>
+        <h3>Mentorship</h3>
+        <p>We believe in guiding students beyond academics, nurturing their character and confidence.</p>
+      </div>
+      <div class="value-card" data-aos="zoom-in" data-aos-delay="250">
+        <div class="value-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Innovation</h3>
+        <p>We continuously evolve our teaching methods and services to meet modern educational needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>Meet Our Leadership</h2>
+      <p>Passionate educators dedicated to your success</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="team-image">
+          <img src="{{ url_for('static', filename='images/owner.png') }}" alt="Mr. Daniel Moses" onerror="this.src='https://placehold.co/400x400/2C7A6E/white?text=Mr.+Daniel'">
+        </div>
+        <div class="team-info">
+          <h3>Mr. Daniel Moses</h3>
+          <div class="team-title">Founder & CEO</div>
+          <p class="team-bio">With over 12 years in educational consulting, Mr. Daniel has personally mentored thousands of students to academic success.</p>
+          <div class="team-social">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="team-image">
+          <img src="{{ url_for('static', filename='images/assistant.png') }}" alt="Mrs. Onwunalu Miracle" onerror="this.src='https://placehold.co/400x400/2C7A6E/white?text=Mrs.+Onwunalu'">
+        </div>
+        <div class="team-info">
+          <h3>Mrs. Onwunalu Miracle</h3>
+          <div class="team-title">Head of Academics</div>
+          <p class="team-bio">Former WAEC examiner with 5+ years experience in curriculum development and exam preparation. She has been an awesome assistant and support to I.A.E</p>
+          <div class="team-social">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2 data-aos="fade-up">Ready to Begin Your Journey?</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Join thousands of successful students who trusted I.A.E™ for their academic excellence</p>
+    <a href="{{ url_for('contact') }}" class="btn btn-primary" data-aos="fade-up" data-aos-delay="200">Get Started Today <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<script>
+// Animated Counter for Stats
+const counters = document.querySelectorAll('.stat-number');
+let counted = false;
+
+function startCounters() {
+  if (counted) return;
+  counted = true;
+
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count'));
+    let current = 0;
+    const increment = target / 50;
+
+    const updateCounter = () => {
+      if (current < target) {
+        current += increment;
+        counter.innerText = Math.floor(current);
+        requestAnimationFrame(updateCounter);
+      } else {
+        counter.innerText = target.toLocaleString();
+      }
+    };
+
+    updateCounter();
+  });
+}
+
+const statsSection = document.querySelector('.story-stats');
+if (statsSection) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  observer.observe(statsSection);
+}
+
+console.log('🎓 About Page Loaded | I.A.E™ — Excellence in Education');
+</script>
+{% endblock %}

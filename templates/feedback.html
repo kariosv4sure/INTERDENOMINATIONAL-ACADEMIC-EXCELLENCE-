@@ -1,0 +1,452 @@
+{% extends "base.html" %}
+
+{% block title %}Share Feedback | I.A.E™ - Your Voice Matters{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      padding: 5rem 0 4rem;
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 3rem 0;
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feedback-section {
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .feedback-section {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    @media (max-width: 968px) {
+      .feedback-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .feedback-form-container {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 32px;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 480px) {
+      .feedback-form-container {
+        padding: 1.2rem;
+      }
+    }
+
+    .rating-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .star-rating {
+      display: flex;
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+
+    .star {
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--gray-400);
+      transition: var(--transition);
+    }
+
+    .star:hover,
+    .star.active {
+      color: var(--accent-gold);
+    }
+
+    @media (max-width: 480px) {
+      .star {
+        font-size: 1.5rem;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--gray-200);
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 480px) {
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .consent {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .consent input {
+      width: auto;
+    }
+
+    .success-message {
+      background: #2ecc71;
+      color: white;
+      padding: 1rem;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      display: none;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .recent-feedback {
+      background: var(--light-bg);
+      padding: 2rem;
+      border-radius: 32px;
+    }
+
+    @media (max-width: 480px) {
+      .recent-feedback {
+        padding: 1.2rem;
+      }
+    }
+
+    .feedback-card {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 480px) {
+      .feedback-card {
+        padding: 1rem;
+      }
+    }
+
+    .feedback-card:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feedback-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .feedback-name {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .feedback-stars {
+      color: var(--accent-gold);
+    }
+
+    .feedback-service {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback-text {
+      color: var(--gray-600);
+      font-style: italic;
+    }
+
+    .feedback-date {
+      font-size: 0.7rem;
+      color: var(--gray-400);
+      margin-top: 0.5rem;
+    }
+
+    .cta-section {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 3rem 0;
+      }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 data-aos="fade-up">Share Your Experience</h1>
+    <p data-aos="fade-up">Your feedback helps us serve you better and inspire others on their academic journey</p>
+  </div>
+</section>
+
+<section class="feedback-section">
+  <div class="container">
+    <div class="feedback-grid">
+      <div class="feedback-form-container" data-aos="fade-right">
+        <h2>Leave Your Feedback</h2>
+        <p>Tell us about your experience with I.A.E™ services</p>
+
+        <div id="successMessage" class="success-message">
+          <i class="fas fa-check-circle"></i> Thank you for your feedback! Your voice matters to us.
+        </div>
+
+        <form id="feedbackForm">
+          <div class="rating-section">
+            <label>Your Rating *</label>
+            <div class="star-rating">
+              <i class="fas fa-star star" data-rating="1"></i>
+              <i class="fas fa-star star" data-rating="2"></i>
+              <i class="fas fa-star star" data-rating="3"></i>
+              <i class="fas fa-star star" data-rating="4"></i>
+              <i class="fas fa-star star" data-rating="5"></i>
+            </div>
+            <input type="hidden" id="rating" name="rating" required>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service Used *</label>
+            <select id="service" name="service" required>
+              <option value="">Select a service</option>
+              <option value="JAMB Tutorial">JAMB Tutorial</option>
+              <option value="WAEC Preparation">WAEC Preparation</option>
+              <option value="JAMB Registration">JAMB Registration</option>
+              <option value="WAEC Services">WAEC Services</option>
+              <option value="Admission Processing">Admission Processing</option>
+              <option value="Certificate Services">Certificate Services</option>
+              <option value="NIN Services">NIN Services</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="feedback">Your Feedback *</label>
+            <textarea id="feedback" name="feedback" required placeholder="Share your experience with us..."></textarea>
+          </div>
+
+          <div class="form-group consent">
+            <input type="checkbox" id="consent" name="consent" required>
+            <label for="consent">I consent to have my feedback displayed on the testimonials page</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Feedback <i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+
+      <div class="recent-feedback" data-aos="fade-left">
+        <h2>Recent Reviews</h2>
+        <p>What our students are saying about us</p>
+
+        <div id="recentFeedbackList">
+          <div class="feedback-card">
+            <div class="feedback-header">
+              <span class="feedback-name">Emeka Okonkwo</span>
+              <span class="feedback-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </span>
+            </div>
+            <div class="feedback-service">JAMB Tutorial</div>
+            <p class="feedback-text">"The JAMB tutorial was exceptional! The materials were comprehensive, and the tutors were always available to help. I scored 285!"</p>
+            <div class="feedback-date">2 days ago</div>
+          </div>
+
+          <div class="feedback-card">
+            <div class="feedback-header">
+              <span class="feedback-name">Amara Nwosu</span>
+              <span class="feedback-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </span>
+            </div>
+            <div class="feedback-service">WAEC Preparation</div>
+            <p class="feedback-text">"I.A.E's WAEC program transformed my results. The mock exams and feedback helped me identify my weaknesses and improve significantly."</p>
+            <div class="feedback-date">5 days ago</div>
+          </div>
+
+          <div class="feedback-card">
+            <div class="feedback-header">
+              <span class="feedback-name">Taiwo Adeleke</span>
+              <span class="feedback-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+              </span>
+            </div>
+            <div class="feedback-service">Admission Processing</div>
+            <p class="feedback-text">"The admission team was incredibly helpful. They guided me through CAPS and helped me secure admission to my preferred university."</p>
+            <div class="feedback-date">1 week ago</div>
+          </div>
+        </div>
+
+        <a href="{{ url_for('testimonials') }}" class="btn btn-primary" style="margin-top: 1rem; width: 100%; background: transparent; border: 2px solid var(--primary); color: var(--primary);">View All Testimonials →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2 data-aos="fade-up">Help Us Serve You Better</h2>
+    <p data-aos="fade-up">Your feedback shapes the future of I.A.E™ and helps thousands of students like you</p>
+    <a href="{{ url_for('services') }}" class="btn btn-primary" data-aos="fade-up" style="background: var(--accent-gold); color: var(--primary-dark);">Explore Our Services <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<script>
+// Star Rating System
+const stars = document.querySelectorAll('.star');
+const ratingInput = document.getElementById('rating');
+let currentRating = 0;
+
+if (stars.length > 0) {
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      const rating = parseInt(star.getAttribute('data-rating'));
+      currentRating = rating;
+      ratingInput.value = rating;
+
+      stars.forEach((s, index) => {
+        if (index < rating) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+    });
+  });
+}
+
+// Form Submission
+const feedbackForm = document.getElementById('feedbackForm');
+const successMessage = document.getElementById('successMessage');
+const recentFeedbackList = document.getElementById('recentFeedbackList');
+
+if (feedbackForm) {
+  feedbackForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (currentRating === 0) {
+      alert('Please select a rating');
+      return;
+    }
+
+    const name = document.getElementById('name').value.trim();
+    const service = document.getElementById('service').value;
+    const feedbackText = document.getElementById('feedback').value.trim();
+
+    if (!name || !service || !feedbackText) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    const consent = document.getElementById('consent').checked;
+    if (!consent) {
+      alert('Please consent to display your feedback');
+      return;
+    }
+
+    // Create new feedback card
+    const starHtml = '<i class="fas fa-star"></i>'.repeat(currentRating);
+    const newFeedback = `
+      <div class="feedback-card">
+        <div class="feedback-header">
+          <span class="feedback-name">${escapeHtml(name)}</span>
+          <span class="feedback-stars">${starHtml}</span>
+        </div>
+        <div class="feedback-service">${escapeHtml(service)}</div>
+        <p class="feedback-text">"${escapeHtml(feedbackText)}"</p>
+        <div class="feedback-date">Just now</div>
+      </div>
+    `;
+
+    recentFeedbackList.insertAdjacentHTML('afterbegin', newFeedback);
+
+    // Show success message
+    successMessage.style.display = 'block';
+
+    // Reset form
+    feedbackForm.reset();
+    stars.forEach(star => star.classList.remove('active'));
+    currentRating = 0;
+    ratingInput.value = '';
+
+    setTimeout(() => {
+      successMessage.style.display = 'none';
+    }, 5000);
+  });
+}
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+console.log('💬 Feedback Page Loaded | I.A.E™ — Your Voice Matters');
+</script>
+{% endblock %}

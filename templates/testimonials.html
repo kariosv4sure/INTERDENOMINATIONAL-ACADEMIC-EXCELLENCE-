@@ -1,0 +1,558 @@
+{% extends "base.html" %}
+
+{% block title %}Testimonials | I.A.E™ - Success Stories from Our Students{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      padding: 5rem 0 4rem;
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 3rem 0;
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-section {
+      padding: 4rem 0;
+      background: var(--light-bg);
+    }
+
+    @media (max-width: 768px) {
+      .stats-section {
+        padding: 2rem 0;
+      }
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 968px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .testimonials-section {
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .testimonials-section {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 10px 24px;
+      background: var(--gray-200);
+      border: none;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      border: 3px solid var(--accent-gold);
+    }
+
+    .testimonial-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .testimonial-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .stars {
+      color: var(--accent-gold);
+      margin: 0.5rem 0;
+    }
+
+    .testimonial-text {
+      color: var(--gray-600);
+      line-height: 1.6;
+      font-style: italic;
+      margin: 1rem 0;
+    }
+
+    .testimonial-result {
+      background: var(--light-bg);
+      padding: 0.5rem;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .video-testimonials {
+      background: var(--light-bg);
+      padding: 5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .video-testimonials {
+        padding: 2.5rem 0;
+      }
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .video-card {
+      background: var(--white);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .video-placeholder {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video-placeholder i {
+      font-size: 4rem;
+      color: white;
+      transition: var(--transition);
+    }
+
+    .video-placeholder:hover i {
+      transform: scale(1.1);
+    }
+
+    .video-info {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .cta-section {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 3rem 0;
+      }
+      .cta-section h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cta-section h2 {
+      color: white;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 data-aos="fade-up">Success Stories</h1>
+    <p data-aos="fade-up">Hear from thousands of students who achieved their academic dreams with I.A.E™</p>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" data-aos="fade-up">
+        <div class="stat-number" data-count="25000">0</div>
+        <p>Happy Students</p>
+      </div>
+      <div class="stat-card" data-aos="fade-up">
+        <div class="stat-number" data-count="6200">0</div>
+        <p>University Admissions</p>
+      </div>
+      <div class="stat-card" data-aos="fade-up">
+        <div class="stat-number" data-count="97">0</div>
+        <p>Success Rate %</p>
+      </div>
+      <div class="stat-card" data-aos="fade-up">
+        <div class="stat-number" data-count="500">0+</div>
+        <p>5-Star Reviews</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="filter-buttons" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="jamb">JAMB Success</button>
+      <button class="filter-btn" data-filter="waec">WAEC Excellence</button>
+      <button class="filter-btn" data-filter="admission">Admission Stories</button>
+    </div>
+
+    <div class="testimonials-grid" id="testimonialsGrid">
+      <!-- Testimonial 1 - JAMB -->
+      <div class="testimonial-card" data-category="jamb" data-aos="fade-up">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">AO</div>
+          <div class="testimonial-info">
+            <h3>Adebayo Ogunlesi</h3>
+            <span class="testimonial-badge">JAMB Score: 287</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I.A.E™ transformed my JAMB preparation completely! The tutors were exceptional, and the materials were spot-on. I scored 287 and got admitted to study Medicine at UNILAG. Thank you, I.A.E!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-graduation-cap"></i> Now studying Medicine at UNILAG
+        </div>
+      </div>
+
+      <!-- Testimonial 2 - WAEC -->
+      <div class="testimonial-card" data-category="waec" data-aos="fade-up" data-aos-delay="100">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">FB</div>
+          <div class="testimonial-info">
+            <h3>Fatima Bello</h3>
+            <span class="testimonial-badge">WAEC: 8 A's</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I was struggling with mathematics and English, but the I.A.E WAEC tutorial program changed everything. The mock exams and detailed feedback helped me score 8 A's! Highly recommended!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-chart-line"></i> 8 A's in WAEC | Now studying at UNN
+        </div>
+      </div>
+
+      <!-- Testimonial 3 - Admission -->
+      <div class="testimonial-card" data-category="admission" data-aos="fade-up" data-aos-delay="200">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">CE</div>
+          <div class="testimonial-info">
+            <h3>Chukwudi Eze</h3>
+            <span class="testimonial-badge">Admission: UNN Law</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"After two years of trying to gain admission, I.A.E helped me navigate JAMB CAPS and the admission process. Within months, I secured admission to study Law at UNN. Their mentorship is priceless!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-gavel"></i> Now studying Law at UNN
+        </div>
+      </div>
+
+      <!-- Testimonial 4 - JAMB -->
+      <div class="testimonial-card" data-category="jamb" data-aos="fade-up">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">OA</div>
+          <div class="testimonial-info">
+            <h3>Oluwaseun Adekunle</h3>
+            <span class="testimonial-badge">JAMB Score: 291</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"The JAMB tutorial at I.A.E was intense but worth every moment. The past question analysis and exam strategies gave me an edge. I scored 291 and got my dream course!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-microscope"></i> Now studying Pharmacy at OAU
+        </div>
+      </div>
+
+      <!-- Testimonial 5 - WAEC -->
+      <div class="testimonial-card" data-category="waec" data-aos="fade-up" data-aos-delay="100">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">PN</div>
+          <div class="testimonial-info">
+            <h3>Precious Nwachukwu</h3>
+            <span class="testimonial-badge">WAEC: 7 A's, 2 B's</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I.A.E's WAEC preparation program gave me confidence. The teachers explained difficult concepts simply, and the mock exams prepared me for the real thing. I'm proud of my results!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-chart-line"></i> 7 A's, 2 B's | Studying Engineering at FUTA
+        </div>
+      </div>
+
+      <!-- Testimonial 6 - Admission -->
+      <div class="testimonial-card" data-category="admission" data-aos="fade-up" data-aos-delay="200">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">JO</div>
+          <div class="testimonial-info">
+            <h3>Jennifer Okafor</h3>
+            <span class="testimonial-badge">Admission: UI Mass Comm</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"The admission processing team at I.A.E is exceptional! They guided me through every step, from course selection to CAPS acceptance. I'm now studying my dream course at UI. Thank you!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-newspaper"></i> Now studying Mass Communication at UI
+        </div>
+      </div>
+
+      <!-- Testimonial 7 - JAMB (Additional) -->
+      <div class="testimonial-card" data-category="jamb" data-aos="fade-up">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">DI</div>
+          <div class="testimonial-info">
+            <h3>Daniel Idowu</h3>
+            <span class="testimonial-badge">JAMB Score: 275</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I.A.E's JAMB prep was a game-changer. The practice tests and personalized feedback helped me identify my weak areas and improve dramatically. I'm now studying Computer Science at UNILORIN!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-laptop-code"></i> Now studying Computer Science at UNILORIN
+        </div>
+      </div>
+
+      <!-- Testimonial 8 - WAEC -->
+      <div class="testimonial-card" data-category="waec" data-aos="fade-up" data-aos-delay="100">
+        <div class="testimonial-header">
+          <div class="testimonial-avatar">SA</div>
+          <div class="testimonial-info">
+            <h3>Sarah Adeyemi</h3>
+            <span class="testimonial-badge">WAEC: 9 A's</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="testimonial-text">"Thanks to I.A.E, I achieved my best WAEC results ever! The study materials were comprehensive, and the tutors were always available to answer questions. I highly recommend them!"</p>
+        <div class="testimonial-result">
+          <i class="fas fa-chart-line"></i> 9 A's in WAEC | Studying Medicine at OOU
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2 data-aos="fade-up">Ready to Write Your Success Story?</h2>
+    <p data-aos="fade-up">Join thousands of students who achieved their academic dreams with I.A.E™</p>
+    <a href="{{ url_for('contact') }}" class="btn btn-primary" data-aos="fade-up" style="background: var(--accent-gold); color: var(--primary-dark);">Get Started Today <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<script>
+// Counter Animation
+const counters = document.querySelectorAll('.stat-number');
+let counted = false;
+
+function startCounters() {
+  if (counted) return;
+  counted = true;
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count'));
+    let current = 0;
+    const increment = target / 50;
+    const update = () => {
+      if (current < target) {
+        current += increment;
+        counter.innerText = Math.floor(current);
+        requestAnimationFrame(update);
+      } else {
+        counter.innerText = target.toLocaleString();
+      }
+    };
+    update();
+  });
+}
+
+const statsSection = document.querySelector('.stats-section');
+if (statsSection) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(statsSection);
+}
+
+// Filter Testimonials
+const filterBtns = document.querySelectorAll('.filter-btn');
+const testimonials = document.querySelectorAll('.testimonial-card');
+
+if (filterBtns.length > 0) {
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      testimonials.forEach(testimonial => {
+        if (filter === 'all' || testimonial.getAttribute('data-category') === filter) {
+          testimonial.style.display = 'block';
+          setTimeout(() => {
+            testimonial.style.opacity = '1';
+            testimonial.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          testimonial.style.opacity = '0';
+          testimonial.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            testimonial.style.display = 'none';
+          }, 300);
+        }
+      });
+    });
+  });
+}
+
+console.log('⭐ Testimonials Page Loaded | I.A.E™ — Real Success Stories');
+</script>
+{% endblock %}
