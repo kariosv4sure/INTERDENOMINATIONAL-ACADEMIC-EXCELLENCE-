@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}I.A.E™ - Academic Excellence{% endblock %}</title>
     <meta name="description" content="INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™ - Your trusted partner for educational success in Nigeria">
-    
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
+
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="IAE Logo" class="logo-img" onerror="this.src='https://placehold.co/60x60/1E5A6F/white?text=IAE'">
-                <span class="logo-text">I.A.E™</span>
-            </div>
-            <ul class="nav-menu">
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="IAE" class="logo-img">
+                <span class="logo-text">I.A.E<span>™</span></span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Home</a></li>
                 <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}>About</a></li>
                 <li><a href="{{ url_for('services') }}" {% if request.endpoint == 'services' %}class="active"{% endif %}>Services</a></li>
@@ -43,15 +40,15 @@
                     {% endif %}
                     <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ url_for('chat') }}">AI Chat</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="nav-btn nav-btn-login">Logout</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}" class="nav-btn nav-btn-login">Login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="nav-btn nav-btn-register">Register</a></li>
                 {% endif %}
             </ul>
-            <div class="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -59,8 +56,10 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div class="flash-message flash-{{ category }}" style="padding: 1rem; margin: 1rem auto; max-width: 1200px; border-radius: 12px; text-align: center;">
+                <div class="flash-message flash-{{ category }}">
+                    <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'danger' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
                     {{ message }}
+                    <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
                 </div>
             {% endfor %}
         {% endif %}
@@ -73,52 +72,61 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-container">
+        <div class="container">
             <div class="footer-grid">
-                <div class="footer-about">
-                    <h3>I.A.E™</h3>
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="IAE">
+                        <span>I.A.E™</span>
+                    </div>
                     <p>INTERDENOMINATIONAL ACADEMIC EXCELLENCE — Excellence is not a promise, it's our standard.</p>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/share/1AvQ25seSk/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://whatsapp.com/channel/0029VakXg6oFCCoUDIhCaq2R" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://t.me/Moses_Fi" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="footer-links">
+                <div>
                     <h4>Quick Links</h4>
-                    <ul>
+                    <ul class="footer-links">
                         <li><a href="{{ url_for('index') }}">Home</a></li>
                         <li><a href="{{ url_for('about') }}">About</a></li>
                         <li><a href="{{ url_for('services') }}">Services</a></li>
                         <li><a href="{{ url_for('contact') }}">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-services">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="{{ url_for('jamb') }}">JAMB Services</a></li>
-                        <li><a href="{{ url_for('waec') }}">WAEC Services</a></li>
-                        <li><a href="{{ url_for('services') }}">O'LEVEL Services</a></li>
+                <div>
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('jamb') }}">JAMB</a></li>
+                        <li><a href="{{ url_for('waec') }}">WAEC</a></li>
+                        <li><a href="{{ url_for('services') }}">O'LEVEL</a></li>
                         <li><a href="{{ url_for('services') }}">Certificates</a></li>
                     </ul>
                 </div>
-                <div class="footer-contact">
-                    <h4>Contact Info</h4>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> 07079396111</li>
-                        <li><i class="fas fa-phone"></i> 08163065109</li>
-                        <li><i class="fas fa-envelope"></i> mosesdanielfiyinfoluwa08@gmail.com</li>
+                <div>
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i> <a href="tel:07079396111">0707 939 6111</a></li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:08163065109">0816 306 5109</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:mosesdanielfiyinfoluwa08@gmail.com">mosesdanielfiyinfoluwa08@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™. All rights reserved.</p>
+                <p>&copy; 2026 I.A.E™. All rights reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by I.A.E™ Team</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Main JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_js %}{% endblock %}
 </body>

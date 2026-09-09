@@ -2,181 +2,104 @@
 
 {% block title %}User Chats | {{ user.username }} | I.A.E™ Admin{% endblock %}
 
-{% block extra_css %}
-<style>
-    .admin-header {
-        background: linear-gradient(135deg, #0B2B40 0%, #1E5A6F 100%);
-        padding: 2rem 0;
-        color: white;
-    }
-    
-    .user-info-card {
-        background: var(--white);
-        border-radius: 24px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: var(--shadow-sm);
-        display: flex;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        align-items: center;
-    }
-    
-    .user-avatar-large {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, var(--primary-light), var(--primary));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 2rem;
-        font-weight: 700;
-    }
-    
-    .user-details h2 {
-        color: var(--primary-dark);
-        margin-bottom: 0.5rem;
-    }
-    
-    .user-details p {
-        color: var(--gray-600);
-        margin-bottom: 0.3rem;
-    }
-    
-    .back-link {
-        margin-left: auto;
-    }
-    
-    .chats-section {
-        background: var(--white);
-        border-radius: 24px;
-        padding: 1.5rem;
-        box-shadow: var(--shadow-sm);
-    }
-    
-    .chat-conversation {
-        margin-bottom: 2rem;
-        border-bottom: 1px solid var(--gray-200);
-        padding-bottom: 1.5rem;
-    }
-    
-    .chat-conversation:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-    
-    .chat-message {
-        margin-bottom: 1rem;
-        display: flex;
-    }
-    
-    .chat-message.user {
-        justify-content: flex-end;
-    }
-    
-    .chat-bubble {
-        max-width: 70%;
-        padding: 0.8rem 1.2rem;
-        border-radius: 20px;
-        word-wrap: break-word;
-    }
-    
-    .chat-message.user .chat-bubble {
-        background: var(--primary);
-        color: white;
-        border-bottom-right-radius: 5px;
-    }
-    
-    .chat-message.bot .chat-bubble {
-        background: var(--light-bg);
-        color: var(--dark);
-        border-bottom-left-radius: 5px;
-    }
-    
-    .chat-time {
-        font-size: 0.7rem;
-        margin-top: 0.3rem;
-        opacity: 0.6;
-    }
-    
-    .no-chats {
-        text-align: center;
-        padding: 3rem;
-        color: var(--gray-400);
-    }
-    
-    @media (max-width: 768px) {
-        .user-info-card {
-            flex-direction: column;
-            text-align: center;
-        }
-        .back-link {
-            margin-left: 0;
-        }
-        .chat-bubble {
-            max-width: 85%;
-        }
-    }
-</style>
-{% endblock %}
-
 {% block content %}
+<!-- Admin Header -->
 <section class="admin-header">
     <div class="container">
-        <h1 data-aos="fade-up">User Chat History</h1>
-        <p data-aos="fade-up">View all conversations with {{ user.username }}</p>
-    </div>
-</section>
-
-<section style="padding: 2rem 0;">
-    <div class="container">
-        <!-- User Info Card -->
-        <div class="user-info-card" data-aos="fade-up">
-            <div class="user-avatar-large">{{ user.username[0]|upper }}</div>
-            <div class="user-details">
-                <h2>{{ user.full_name or user.username }}</h2>
-                <p><i class="fas fa-envelope"></i> {{ user.email }}</p>
-                <p><i class="fas fa-phone"></i> {{ user.phone or 'No phone number' }}</p>
-                <p><i class="fas fa-calendar"></i> Joined: {{ user.created_at.strftime('%B %d, %Y') }}</p>
-                <p><i class="fas fa-comments"></i> Total Chats: {{ chats|length }}</p>
+        <div class="admin-header-content">
+            <div>
+                <span class="tag" style="background: rgba(245, 166, 35, 0.2); color: var(--secondary);">User Chats</span>
+                <h1>Chat History: <span class="gradient-text">{{ user.username }}</span></h1>
+                <p>View all conversations with this user</p>
             </div>
-            <div class="back-link">
-                <a href="{{ url_for('admin_users') }}" class="btn btn-outline">
+            <div class="admin-header-actions">
+                <a href="{{ url_for('admin_users') }}" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">
                     <i class="fas fa-arrow-left"></i> Back to Users
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
         </div>
-        
-        <!-- Chats Section -->
-        <div class="chats-section" data-aos="fade-up">
-            <h3><i class="fas fa-history"></i> Conversation History</h3>
-            
-            {% if chats %}
-                {% for chat in chats %}
-                <div class="chat-conversation">
-                    <div class="chat-message user">
-                        <div class="chat-bubble">
-                            {{ chat.user_message }}
-                            <div class="chat-time">{{ chat.created_at.strftime('%B %d, %Y at %I:%M %p') }}</div>
-                        </div>
+    </div>
+</section>
+
+<!-- User Info -->
+<section class="user-info-section">
+    <div class="container">
+        <div class="user-info-card">
+            <div class="user-avatar-large">{{ user.username[0]|upper }}</div>
+            <div class="user-details">
+                <h2>{{ user.full_name or user.username }}</h2>
+                <div class="user-details-grid">
+                    <div>
+                        <i class="fas fa-envelope"></i> {{ user.email }}
                     </div>
-                    <div class="chat-message bot">
-                        <div class="chat-bubble">
-                            {{ chat.bot_response }}
-                            <div class="chat-time">AI Response</div>
-                        </div>
+                    <div>
+                        <i class="fas fa-phone"></i> {{ user.phone or 'No phone number' }}
+                    </div>
+                    <div>
+                        <i class="fas fa-calendar"></i> Joined: {{ user.created_at.strftime('%B %d, %Y') }}
+                    </div>
+                    <div>
+                        <i class="fas fa-comments"></i> Total Chats: {{ chats|length }}
                     </div>
                 </div>
-                {% endfor %}
-            {% else %}
-                <div class="no-chats">
-                    <i class="fas fa-comment-slash" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <p>No chat history found for this user.</p>
-                </div>
-            {% endif %}
+            </div>
+            <div class="user-status-badge">
+                <span class="status-badge {% if user.is_active %}status-active{% else %}status-inactive{% endif %}">
+                    {{ 'Active' if user.is_active else 'Inactive' }}
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Chats -->
+<section class="chats-section">
+    <div class="container">
+        <div class="chats-card">
+            <div class="chats-header">
+                <h3><i class="fas fa-history"></i> Conversation History</h3>
+                <span class="chat-count">{{ chats|length }} messages</span>
+            </div>
+
+            <div class="chats-body">
+                {% if chats %}
+                    {% for chat in chats %}
+                    <div class="chat-conversation">
+                        <div class="chat-message user">
+                            <div class="chat-bubble">
+                                <div class="chat-avatar user-chat-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="chat-content">
+                                    {{ chat.user_message }}
+                                    <div class="chat-time">{{ chat.created_at.strftime('%B %d, %Y at %I:%M %p') }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-message bot">
+                            <div class="chat-bubble">
+                                <div class="chat-avatar bot-chat-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="chat-content">
+                                    {{ chat.bot_response }}
+                                    <div class="chat-time">AI Response</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-chats">
+                        <i class="fas fa-comment-slash"></i>
+                        <h3>No chat history</h3>
+                        <p>This user hasn't had any conversations with the AI assistant yet.</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </section>

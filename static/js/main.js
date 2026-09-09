@@ -1,238 +1,295 @@
 /**
- * I.A.E™ - Main JavaScript File
- * Handles navigation, animations, counters, and interactive elements
+ * I.A.E™ - Main JavaScript with GSAP
  */
 
-// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Initialize AOS (Animate On Scroll)
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 700,
-            once: true,
-            offset: 30,
-            easing: 'ease-out-quad'
-        });
-    }
-
     // ========================================
-    // MOBILE NAVIGATION TOGGLE
+    // GSAP CONFIG
     // ========================================
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // ========================================
+    // NAVBAR
+    // ========================================
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    
+    // Navbar scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile menu
     if (hamburger) {
         hamburger.addEventListener('click', (e) => {
             e.stopPropagation();
             navMenu.classList.toggle('active');
         });
     }
-
-    // Close mobile menu when clicking a link
+    
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
-            if (navMenu) {
-                navMenu.classList.remove('active');
-            }
+            navMenu.classList.remove('active');
         });
     });
-
-    // Close menu when clicking outside (for mobile)
+    
     document.addEventListener('click', (e) => {
-        if (navMenu && navMenu.classList.contains('active')) {
+        if (navMenu.classList.contains('active')) {
             if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
                 navMenu.classList.remove('active');
             }
         }
     });
-
+    
     // ========================================
-    // ANIMATED COUNTER FOR STATS
+    // HERO ANIMATIONS
+    // ========================================
+    const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    
+    heroTL
+        .from('.hero-content h1', {
+            opacity: 0,
+            y: 60,
+            duration: 1
+        })
+        .from('.hero-content p', {
+            opacity: 0,
+            y: 40,
+            duration: 0.8
+        }, '-=0.5')
+        .from('.hero-buttons .btn', {
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            stagger: 0.15
+        }, '-=0.4')
+        .from('.hero-trust span', {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.1
+        }, '-=0.3')
+        .from('.stat-card', {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            stagger: 0.2
+        }, '-=0.3');
+    
+    // ========================================
+    // COUNTERS
     // ========================================
     const counters = document.querySelectorAll('.stat-number');
-    let counted = false;
-
-    function startCounters() {
-        if (counted) return;
-        counted = true;
-
+    let countersAnimated = false;
+    
+    function animateCounters() {
+        if (countersAnimated) return;
+        countersAnimated = true;
+        
         counters.forEach(counter => {
             const target = parseInt(counter.getAttribute('data-count'));
-            let current = 0;
-            const increment = target / 50;
-
-            const updateCounter = () => {
-                if (current < target) {
-                    current += increment;
-                    counter.innerText = Math.floor(current);
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(eased * target);
+                
+                counter.textContent = current.toLocaleString();
+                
+                if (progress < 1) {
                     requestAnimationFrame(updateCounter);
                 } else {
-                    counter.innerText = target.toLocaleString();
+                    counter.textContent = target.toLocaleString();
                 }
-            };
-
-            updateCounter();
+            }
+            
+            requestAnimationFrame(updateCounter);
         });
     }
-
-    // Observe stats container to trigger counters when visible
+    
     const statsContainer = document.querySelector('.hero-stats');
-    if (statsContainer && counters.length > 0) {
+    if (statsContainer) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    startCounters();
+                    animateCounters();
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.3 });
-
+        
         observer.observe(statsContainer);
     }
-
+    
     // ========================================
-    // NAVBAR SCROLL EFFECT
+    // ABOUT PREVIEW
     // ========================================
-    const navbar = document.querySelector('.navbar');
-
-    window.addEventListener('scroll', () => {
-        if (navbar) {
-            if (window.scrollY > 50) {
-                navbar.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.08)';
-            } else {
-                navbar.style.boxShadow = 'var(--shadow-sm)';
-            }
-        }
+    gsap.from('.about-image', {
+        scrollTrigger: {
+            trigger: '.about-preview',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        x: -50,
+        duration: 1,
+        ease: 'power3.out'
     });
-
-    // ========================================
-    // ACTIVE NAVIGATION LINK HIGHLIGHT
-    // ========================================
-    // Get current path without domain and query params
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref === currentPath || 
-            (currentPath === '' && linkHref === 'index.html') ||
-            (linkHref === currentPath.replace('.html', ''))) {
-            link.classList.add('active');
-        }
+    
+    gsap.from('.about-content', {
+        scrollTrigger: {
+            trigger: '.about-preview',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        x: 50,
+        duration: 1,
+        ease: 'power3.out'
     });
-
+    
     // ========================================
-    // SMOOTH SCROLL FOR ANCHOR LINKS
-    // ========================================
-    document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            const target = document.querySelector(targetId);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // ========================================
-    // SERVICE CARD HOVER EFFECT
+    // SERVICES
     // ========================================
     const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'all 0.3s ease';
+    
+    serviceCards.forEach((card, index) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: 'power3.out'
         });
     });
-
+    
     // ========================================
-    // LAZY LOAD IMAGES WITH FALLBACK
+    // JAMB BOX
     // ========================================
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.addEventListener('error', function() {
-            if (!this.hasAttribute('data-fallback')) {
-                this.setAttribute('data-fallback', 'true');
-                const width = this.width || 300;
-                const height = this.height || 300;
-                const text = this.alt || 'Image';
-                this.src = `https://placehold.co/${width}x${height}/1E5A6F/white?text=${encodeURIComponent(text)}`;
-            }
-        });
+    gsap.from('.jamb-box', {
+        scrollTrigger: {
+            trigger: '.jamb-box',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        scale: 0.96,
+        duration: 1,
+        ease: 'power3.out'
     });
-
+    
     // ========================================
-    // ADD SCROLL REVEAL FOR ADDITIONAL ELEMENTS
-    // ========================================
-    const revealElements = document.querySelectorAll('.service-card, .about-grid, .jamb-box');
-    if (revealElements.length > 0) {
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        revealElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            revealObserver.observe(el);
-        });
-
-        // Add class for revealed animation
-        const style = document.createElement('style');
-        style.textContent = `
-            .service-card.revealed,
-            .about-grid.revealed,
-            .jamb-box.revealed {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // ========================================
-    // AUTO-HIDE FLASH MESSAGES
+    // FLASH MESSAGES
     // ========================================
     const flashMessages = document.querySelectorAll('.flash-message');
-    if (flashMessages.length > 0) {
+    flashMessages.forEach(msg => {
         setTimeout(() => {
-            flashMessages.forEach(msg => {
-                msg.style.opacity = '0';
-                msg.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    msg.style.display = 'none';
-                }, 500);
-            });
+            msg.style.opacity = '0';
+            msg.style.transform = 'translateX(40px)';
+            msg.style.transition = 'all 0.5s ease';
+            setTimeout(() => msg.remove(), 500);
         }, 5000);
-    }
-
+    });
+    
     // ========================================
-    // CONSOLE LOG (welcome message)
+    // PAGE-SPECIFIC: About Page Counters
     // ========================================
-    console.log('🎓 I.A.E™ — INTERDENOMINATIONAL ACADEMIC EXCELLENCE');
-    console.log('✅ Website loaded successfully | Excellence is our standard');
-    console.log('🚀 Flask Web App | AI Assistant Active | PostgreSQL Connected');
-
-    // ========================================
-    // PREVENT DOUBLE SCROLL ON MOBILE MENU
-    // ========================================
-    if (hamburger) {
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
+    const aboutCounters = document.querySelectorAll('.story-stats .stat-number');
+    let aboutCountersAnimated = false;
+    
+    function animateAboutCounters() {
+        if (aboutCountersAnimated) return;
+        aboutCountersAnimated = true;
+        
+        aboutCounters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(eased * target);
+                
+                counter.textContent = current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target.toLocaleString();
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
         });
     }
-
-    // Close menu on window resize (if open)
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 968 && navMenu && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-        }
-    });
+    
+    const storyStats = document.querySelector('.story-stats');
+    if (storyStats) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateAboutCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        observer.observe(storyStats);
+    }
+    
+    // ========================================
+    // PAGE-SPECIFIC: Services Tabs
+    // ========================================
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const serviceCardsGrid = document.querySelectorAll('.service-card');
+    
+    if (tabBtns.length > 0) {
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.getAttribute('data-category');
+                
+                serviceCardsGrid.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+    }
+    
+    // ========================================
+    // CONSOLE
+    // ========================================
+    console.log('🎓 I.A.E™ — INTERDENOMINATIONAL ACADEMIC EXCELLENCE');
+    console.log('✅ Modern UI loaded with GSAP');
+    console.log('🚀 Excellence is our standard');
 });
