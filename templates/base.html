@@ -7,6 +7,33 @@
 <title>{% block title %}I.A.E™ — Interdenominational Academic Excellence{% endblock %}</title>
 <meta name="description" content="{% block description %}I.A.E™ — JAMB, WAEC, A'Level, certificates, admission processing and NIN services. Nigeria. Since 2016.{% endblock %}">
 
+<!-- =========================================================
+     FAVICON
+     ========================================================= -->
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logo.png') }}">
+
+<!-- =========================================================
+     OPEN GRAPH (WhatsApp, Facebook, LinkedIn)
+     ========================================================= -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="I.A.E™">
+<meta property="og:title" content="{% block og_title %}I.A.E™ — JAMB, WAEC & Admission Support{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Nigeria's trusted academic partner. JAMB registration, WAEC coaching, A'Level, certificates, admission processing and NIN services — since 2016.{% endblock %}">
+<meta property="og:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="I.A.E™ — JAMB, WAEC & Admission Support">
+<meta property="og:url" content="{{ request.url }}">
+
+<!-- =========================================================
+     TWITTER CARD
+     ========================================================= -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twitter_title %}I.A.E™ — JAMB, WAEC & Admission Support{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}Nigeria's trusted academic partner since 2016.{% endblock %}">
+<meta name="twitter:image" content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&display=swap" rel="stylesheet">
