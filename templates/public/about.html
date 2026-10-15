@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}About — I.A.E™{% endblock %}
+{% block description %}The story behind I.A.E™ — founded by Mr. Daniel Moses in 2016 to give every Nigerian student honest academic guidance.{% endblock %}
+
+{% block extra_css %}
+.page-hero{padding:80px 0 60px;background:var(--cream-2);border-bottom:1px solid var(--cream-3);position:relative;overflow:hidden}
+.page-hero::before{content:"";position:absolute;width:520px;height:520px;right:-180px;top:-180px;border-radius:50%;border:1px solid rgba(212,165,116,.18)}
+.page-hero .container{position:relative;z-index:1}
+.page-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;color:var(--choco);letter-spacing:-.02em;max-width:20ch;margin-top:16px}
+.page-hero h1 em{font-style:italic;color:var(--caramel-2)}
+.page-hero p{color:var(--muted);max-width:56ch;margin-top:20px;font-size:1.08rem}
+
+.section{padding:100px 0;background:var(--cream)}
+.section.alt{background:var(--cream-2)}
+
+.story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.story-image{position:relative;max-width:520px;width:100%}
+.story-image .frame{aspect-ratio:4/5;background:var(--cream-3);border-radius:6px;overflow:hidden;box-shadow:var(--shadow-lg);position:relative}
+.story-image .frame img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:contrast(1.02) saturate(.96)}
+.story-image .frame::after{content:"";position:absolute;inset:12px;border:1px solid rgba(212,165,116,.7);border-radius:2px;pointer-events:none}
+.story-badge{position:absolute;bottom:-18px;right:-18px;background:var(--choco);color:var(--gold);font-family:var(--serif);font-weight:700;font-size:1.2rem;padding:16px 22px;border-radius:6px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;z-index:2}
+.story-badge i{color:var(--gold)}
+
+.story-content h2{font-family:var(--serif);font-size:clamp(1.8rem,3.6vw,2.6rem);color:var(--choco);letter-spacing:-.01em;margin:16px 0 22px;line-height:1.15}
+.story-content h2 em{font-style:italic;color:var(--caramel-2)}
+.story-content p{color:var(--muted);font-size:1.04rem;line-height:1.75;margin-bottom:18px;max-width:56ch}
+.story-content p strong{color:var(--choco);font-weight:700}
+
+.story-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;padding-top:32px;border-top:1px solid var(--cream-3)}
+.story-stats > div{display:flex;flex-direction:column;gap:4px}
+.story-stats .stat-num{font-family:var(--serif);font-weight:700;font-size:2rem;color:var(--choco);line-height:1}
+.story-stats .stat-num em{font-style:normal;color:var(--caramel-2)}
+.story-stats span{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.mv-card{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:40px 34px;transition:transform .3s,box-shadow .3s}
+.mv-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.mv-card .ic{width:56px;height:56px;border-radius:16px;background:var(--choco);color:var(--gold);display:grid;place-items:center;font-size:1.3rem;margin-bottom:22px}
+.mv-card h3{font-family:var(--serif);font-size:1.4rem;color:var(--choco);margin-bottom:12px;letter-spacing:-.01em}
+.mv-card p{color:var(--muted);font-size:.98rem;line-height:1.7}
+
+.section-head{text-align:center;margin-bottom:56px}
+.section-head h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,3.2rem);color:var(--choco);letter-spacing:-.01em}
+.section-head h2 em{font-style:italic;color:var(--caramel-2)}
+.section-head p{color:var(--muted);margin-top:12px;max-width:52ch;margin-inline:auto}
+
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.value-card{background:var(--cream-2);border:1px solid var(--cream-3);border-radius:var(--r);padding:32px 26px;transition:background .3s,transform .3s}
+.value-card:hover{background:var(--cream);transform:translateY(-4px)}
+.value-card .ic{width:48px;height:48px;border-radius:12px;background:var(--cream);color:var(--caramel-2);display:grid;place-items:center;font-size:1.1rem;margin-bottom:18px}
+.value-card h3{font-family:var(--serif);font-size:1.2rem;color:var(--choco);margin-bottom:8px}
+.value-card p{color:var(--muted);font-size:.92rem;line-height:1.6}
+
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:900px;margin-inline:auto}
+.team-card{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);overflow:hidden;transition:transform .3s,box-shadow .3s}
+.team-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.team-image{aspect-ratio:1;background:var(--cream-3);overflow:hidden}
+.team-image img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.team-info{padding:26px 28px}
+.team-info h3{font-family:var(--serif);font-size:1.35rem;color:var(--choco);margin-bottom:4px}
+.team-title{display:inline-block;font-family:var(--mono,ui-monospace,monospace);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--caramel-2);margin-bottom:16px}
+.team-info p{color:var(--muted);font-size:.94rem;line-height:1.65;margin-bottom:18px}
+.team-social{display:flex;gap:10px}
+.team-social a{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--cream-3);color:var(--choco-2);display:grid;place-items:center;transition:all .2s}
+.team-social a:hover{background:var(--choco);border-color:var(--choco);color:var(--gold);transform:translateY(-3px)}
+
+@media (max-width:900px){
+  .page-hero{padding:60px 0 50px}
+  .section{padding:72px 0}
+  .story-grid{grid-template-columns:1fr;gap:50px}
+  .story-image{margin-inline:auto}
+  .story-badge{right:0}
+  .mv-grid{grid-template-columns:1fr}
+  .values-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .values-grid{grid-template-columns:1fr}
+  .story-stats{grid-template-columns:1fr;gap:16px}
+}
+{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">About I.A.E™</span>
+    <h1>Our <em>story.</em></h1>
+    <p>Why we exist, what we stand for, and who's behind it. Short version: we help Nigerian students get from registration to admission without the guesswork.</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-image">
+        <div class="frame">
+          <img src="{{ url_for('static', filename='images/owner.png') }}"
+               alt="Mr. Daniel Moses, Founder and CEO"
+               onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('img-fallback')">
+        </div>
+        <div class="story-badge"><i class="fas fa-award"></i> Since 2016</div>
+      </div>
+
+      <div class="story-content">
+        <span class="eyebrow">Our journey</span>
+        <h2>From one tutorial desk to a <em>national paper trail.</em></h2>
+        <p><strong>INTERDENOMINATIONAL ACADEMIC EXCELLENCE [I.A.E]™</strong> started with a simple conviction: every student deserves honest guidance, regardless of background, school, or belief.</p>
+        <p>Founded by <strong>Mr. Daniel Moses</strong>, an educator with over twelve years of experience, I.A.E has grown from a small coaching desk into a full academic services outfit serving thousands of students across Nigeria.</p>
+
+        <div class="story-stats">
+          <div>
+            <div class="stat-num"><span data-count="12" data-suffix="+">12+</span></div>
+            <span>Years running</span>
+          </div>
+          <div>
+            <div class="stat-num"><span data-count="28700" data-suffix="+">28,700+</span></div>
+            <span>Students guided</span>
+          </div>
+          <div>
+            <div class="stat-num"><em data-count="97" data-suffix="%">97%</em></div>
+            <span>Success rate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION & VISION -->
+<section class="section alt">
+  <div class="container">
+    <div class="mv-grid">
+      <div class="mv-card">
+        <div class="ic"><i class="fas fa-bullseye"></i></div>
+        <h3>Our mission</h3>
+        <p>Make quality academic guidance and exam preparation affordable and accessible to every Nigerian student, regardless of where they live or which school they attend. No gatekeeping. No guesswork. Just clear steps and honest advice.</p>
+      </div>
+      <div class="mv-card">
+        <div class="ic"><i class="fas fa-eye"></i></div>
+        <h3>Our vision</h3>
+        <p>Become Nigeria's most trusted academic partner — the first name students, parents, and schools think of when it's time to move from one level to the next. Not the biggest. The one people refer their own family to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" style="display:inline-flex">Our principles</span>
+      <h2>What we <em>actually</em> stand for</h2>
+      <p>Not slogans. The four things we hold ourselves to on every file.</p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="ic"><i class="fas fa-star"></i></div>
+        <h3>Excellence</h3>
+        <p>Every registration, every coaching session, every follow-up call. Done properly or not at all.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic"><i class="fas fa-handshake"></i></div>
+        <h3>Integrity</h3>
+        <p>Clear pricing before you pay. Honest answers even when they're not what you wanted to hear.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic"><i class="fas fa-hand-holding-heart"></i></div>
+        <h3>Mentorship</h3>
+        <p>We don't hand you a link and disappear. We stay on the file until the outcome is settled.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic"><i class="fas fa-chart-line"></i></div>
+        <h3>Improvement</h3>
+        <p>JAMB rules change. Cut-offs shift. We update our playbook every cycle — no stale advice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" style="display:inline-flex">Who runs it</span>
+      <h2>The people behind <em>the work</em></h2>
+      <p>Small team, high accountability. If something goes wrong, you know exactly who to call.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-image">
+          <img src="{{ url_for('static', filename='images/owner.png') }}"
+               alt="Mr. Daniel Moses"
+               onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('img-fallback')">
+        </div>
+        <div class="team-info">
+          <h3>Mr. Daniel Moses</h3>
+          <span class="team-title">Founder &amp; CEO</span>
+          <p>Twelve years in Nigerian education. Personally oversees registration, coaching, and admission follow-up — you'll speak to him at least once during the process.</p>
+          <div class="team-social">
+            <a href="https://wa.me/2347079396111" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-image">
+          <img src="{{ url_for('static', filename='images/assistant.png') }}"
+               alt="Mrs. Onwunalu Miracle"
+               onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('img-fallback')">
+        </div>
+        <div class="team-info">
+          <h3>Mrs. Onwunalu Miracle</h3>
+          <span class="team-title">Head of Academics</span>
+          <p>Former WAEC examiner. Builds and reviews every coaching curriculum we run. Reads every exam marking scheme before it hits our students.</p>
+          <div class="team-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box" style="background:var(--choco);border-radius:var(--r);padding:100px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)">
+      <div style="position:absolute;inset:16px;border:1px solid rgba(212,165,116,.35);border-radius:10px;pointer-events:none"></div>
+      <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,5vw,3.6rem);color:var(--cream);max-width:22ch;margin:0 auto 22px;letter-spacing:-.02em;position:relative">
+        Ready to <em style="font-style:italic;color:var(--gold)">start?</em>
+      </h2>
+      <p style="color:rgba(251,246,239,.78);max-width:48ch;margin:0 auto 36px;position:relative">Message us on WhatsApp or create a free account. Either way, we pick it up from there.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative">
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Create free account <i class="fas fa-arrow-right"></i></a>
+        <a href="https://wa.me/2347079396111" target="_blank" rel="noopener" class="btn btn-light"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

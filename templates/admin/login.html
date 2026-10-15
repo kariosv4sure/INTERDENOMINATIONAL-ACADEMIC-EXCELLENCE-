@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Admin access — I.A.E™{% endblock %}
+
+{% block extra_css %}
+.admin-login-wrap{padding:80px 0 120px;background:var(--cream);min-height:calc(100vh - 78px);display:flex;align-items:center}
+.admin-login-card{max-width:460px;width:100%;margin-inline:auto;background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:52px 44px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.admin-login-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--caramel),var(--gold),var(--caramel))}
+
+.admin-badge{text-align:center;margin-bottom:34px}
+.admin-lock{width:72px;height:72px;border-radius:50%;background:var(--choco);color:var(--gold);display:grid;place-items:center;font-size:1.7rem;margin:0 auto 22px;position:relative}
+.admin-lock::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(212,165,116,.35)}
+.admin-badge h2{font-family:var(--serif);font-size:1.85rem;color:var(--choco);letter-spacing:-.01em;margin-bottom:8px}
+.admin-badge p{color:var(--muted);font-size:.94rem}
+
+.admin-form .form-group{margin-bottom:20px}
+.admin-form label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--choco-2);margin-bottom:8px}
+.admin-form label i{color:var(--caramel-2);margin-right:6px;font-size:.85rem}
+.admin-form input[type=text],
+.admin-form input[type=password]{width:100%;padding:14px 16px;border:1.5px solid var(--cream-3);border-radius:10px;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--cream-2);transition:border-color .2s ease,background-color .2s ease}
+.admin-form input:focus{outline:none;border-color:var(--caramel);background:#fff}
+
+.password-wrapper{position:relative}
+.password-wrapper input{padding-right:48px}
+.toggle-password{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:8px;color:var(--muted);display:grid;place-items:center;font-size:.95rem;transition:color .2s,background-color .2s;background:none;border:none;cursor:pointer}
+.toggle-password:hover{color:var(--choco);background:var(--cream-3)}
+
+.admin-login-btn{width:100%;justify-content:center;padding:16px 30px;font-size:.95rem;margin-top:8px}
+
+.back-link{text-align:center;margin-top:28px;padding-top:24px;border-top:1px solid var(--cream-3);font-size:.9rem}
+.back-link a{color:var(--muted);display:inline-flex;align-items:center;gap:8px;transition:color .2s}
+.back-link a:hover{color:var(--caramel-2)}
+.back-link a i{font-size:.8rem}
+
+.security-note{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:var(--cream-2);border:1px solid var(--cream-3);border-radius:10px;margin-top:24px;font-size:.82rem;color:var(--muted);line-height:1.5}
+.security-note i{color:var(--caramel-2);margin-top:2px;flex-shrink:0}
+
+@media (max-width:520px){
+  .admin-login-wrap{padding:50px 0 80px}
+  .admin-login-card{padding:40px 26px}
+  .admin-badge h2{font-size:1.55rem}
+}
+{% endblock %}
+
+{% block content %}
+<section class="admin-login-wrap">
+  <div class="container">
+    <div class="admin-login-card">
+
+      <div class="admin-badge">
+        <div class="admin-lock"><i class="fas fa-shield-halved"></i></div>
+        <h2>Admin access</h2>
+        <p>Restricted area — sign in to continue</p>
+      </div>
+
+      <form method="POST" action="{{ url_for('admin.login') }}" class="admin-form" autocomplete="on">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="form-group">
+          <label for="username"><i class="fas fa-user"></i> Username</label>
+          <input type="text" id="username" name="username" required
+                 placeholder="Administrator username"
+                 autocomplete="username"
+                 autofocus
+                 value="{{ request.form.get('username', '') }}">
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" name="password" required
+                   placeholder="Administrator password"
+                   autocomplete="current-password">
+            <button type="button" class="toggle-password" id="toggleBtn" aria-label="Show password">
+              <i class="fas fa-eye" id="toggleIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary admin-login-btn">
+          <i class="fas fa-lock-open"></i> Access dashboard
+        </button>
+      </form>
+
+      <div class="security-note">
+        <i class="fas fa-circle-info"></i>
+        <span>Admin accounts are created by the system. If you're locked out, contact the site owner to reset credentials via <code style="font-family:var(--mono,ui-monospace,monospace);background:var(--cream-3);padding:1px 6px;border-radius:4px">.env</code>.</span>
+      </div>
+
+      <div class="back-link">
+        <a href="{{ url_for('public.index') }}">
+          <i class="fas fa-arrow-left"></i> Back to homepage
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var btn = document.getElementById('toggleBtn');
+  var input = document.getElementById('password');
+  var icon = document.getElementById('toggleIcon');
+  if (!btn || !input || !icon) return;
+  btn.addEventListener('click', function(){
+    if (input.type === 'password'){
+      input.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+      btn.setAttribute('aria-label', 'Hide password');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+      btn.setAttribute('aria-label', 'Show password');
+    }
+  });
+})();
+</script>
+{% endblock %}

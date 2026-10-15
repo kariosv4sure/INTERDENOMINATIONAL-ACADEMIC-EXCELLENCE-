@@ -1,0 +1,406 @@
+{% extends "base.html" %}
+
+{% block title %}Services — I.A.E™{% endblock %}
+{% block description %}JAMB, WAEC, A'Level, certificates, admission processing and NIN services — all handled by one team.{% endblock %}
+
+{% block extra_css %}
+.page-hero{padding:80px 0 60px;background:var(--cream-2);border-bottom:1px solid var(--cream-3);position:relative;overflow:hidden}
+.page-hero::before{content:"";position:absolute;width:520px;height:520px;right:-180px;top:-180px;border-radius:50%;border:1px solid rgba(212,165,116,.18)}
+.page-hero .container{position:relative;z-index:1}
+.page-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;color:var(--choco);letter-spacing:-.02em;max-width:18ch;margin-top:16px}
+.page-hero h1 em{font-style:italic;color:var(--caramel-2)}
+.page-hero p{color:var(--muted);max-width:56ch;margin-top:20px;font-size:1.08rem}
+
+.section{padding:100px 0;background:var(--cream)}
+.section.alt{background:var(--cream-2)}
+
+.svc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:44px;padding-bottom:26px;border-bottom:1px solid var(--cream-3)}
+.tab-btn{padding:9px 18px;border-radius:999px;border:1.5px solid var(--cream-3);background:var(--cream-2);color:var(--choco-2);font-size:.85rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s ease}
+.tab-btn:hover{border-color:var(--caramel);color:var(--choco)}
+.tab-btn.active{background:var(--choco);color:var(--cream);border-color:var(--choco)}
+
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.svc-card{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.svc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--caramel)}
+.svc-card.hidden{display:none}
+.svc-head{padding:28px 26px 20px;border-bottom:1px solid var(--cream-3);position:relative}
+.svc-head .ic{width:52px;height:52px;border-radius:14px;background:var(--cream-2);color:var(--caramel-2);display:grid;place-items:center;font-size:1.2rem;margin-bottom:18px;transition:background-color .3s ease,color .3s ease}
+.svc-card:hover .svc-head .ic{background:var(--choco);color:var(--gold)}
+.svc-head h3{font-family:var(--serif);font-size:1.35rem;color:var(--choco);letter-spacing:-.01em;margin-bottom:6px}
+.svc-head .badge{display:inline-block;font-family:var(--mono,ui-monospace,monospace);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--caramel-2)}
+.svc-body{padding:24px 26px;flex:1;display:flex;flex-direction:column;gap:20px}
+.svc-body p{color:var(--muted);font-size:.95rem;line-height:1.6}
+.svc-body ul{display:grid;gap:10px}
+.svc-body li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--choco-2);line-height:1.5}
+.svc-body li i{color:var(--green);font-size:.85rem;margin-top:4px;flex-shrink:0}
+.svc-price{padding-top:16px;border-top:1px solid var(--cream-3);margin-top:auto}
+.svc-price .lbl{font-family:var(--mono,ui-monospace,monospace);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.svc-price .amt{font-family:var(--serif);font-weight:700;font-size:1.5rem;color:var(--choco);display:block;margin-top:4px}
+.svc-foot{padding:20px 26px;background:var(--cream-2);border-top:1px solid var(--cream-3);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.svc-foot .btn{flex-shrink:0}
+
+.section-head{text-align:center;margin-bottom:52px}
+.section-head h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,3rem);color:var(--choco);letter-spacing:-.01em}
+.section-head h2 em{font-style:italic;color:var(--caramel-2)}
+.section-head p{color:var(--muted);margin-top:12px;max-width:52ch;margin-inline:auto}
+
+.popular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.popular-card{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:34px 30px;display:flex;flex-direction:column;gap:14px;transition:transform .3s,box-shadow .3s}
+.popular-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.popular-card .ic{width:52px;height:52px;border-radius:14px;background:var(--choco);color:var(--gold);display:grid;place-items:center;font-size:1.2rem}
+.popular-card h3{font-family:var(--serif);font-size:1.25rem;color:var(--choco);letter-spacing:-.01em}
+.popular-card p{color:var(--muted);font-size:.94rem;line-height:1.6;flex:1}
+.popular-card ul{display:grid;gap:8px;margin:8px 0}
+.popular-card li{display:flex;gap:10px;align-items:center;font-size:.9rem;color:var(--choco-2)}
+.popular-card li i{color:var(--green);font-size:.8rem}
+
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:36px 30px;display:flex;flex-direction:column;gap:16px;position:relative;transition:transform .3s,box-shadow .3s,border-color .3s}
+.price-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--caramel)}
+.price-card.featured{background:var(--choco);color:var(--cream);border-color:var(--choco)}
+.price-card.featured h3,.price-card.featured .amt{color:var(--cream)}
+.price-card.featured .desc{color:rgba(251,246,239,.75)}
+.price-card .pricing-tag{position:absolute;top:-12px;right:24px;background:var(--caramel);color:var(--cream);padding:6px 14px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.price-card h3{font-family:var(--serif);font-size:1.5rem;color:var(--choco);letter-spacing:-.01em}
+.price-card .amt{font-family:var(--serif);font-weight:700;font-size:2.4rem;color:var(--choco);line-height:1}
+.price-card .amt small{font-size:.9rem;font-weight:400;color:var(--muted);font-family:var(--sans,Inter,sans-serif)}
+.price-card.featured .amt small{color:rgba(251,246,239,.65)}
+.price-card .desc{color:var(--muted);font-size:.9rem}
+.price-card ul{display:grid;gap:12px;margin:8px 0 18px}
+.price-card li{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;line-height:1.5}
+.price-card li i{font-size:.8rem;margin-top:4px;flex-shrink:0}
+.price-card li.on i{color:var(--green)}
+.price-card li.off{opacity:.5}
+.price-card li.off i{color:var(--muted)}
+.price-card.featured li.on i{color:var(--gold)}
+.price-card.featured li.off i{color:rgba(251,246,239,.4)}
+.price-card .btn{margin-top:auto}
+.price-card.featured .btn-primary{background:var(--gold);color:var(--choco)}
+.price-card.featured .btn-primary:hover{background:var(--cream);color:var(--choco)}
+
+@media (max-width:1000px){
+  .svc-grid,.popular-grid,.price-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:900px){
+  .page-hero{padding:60px 0 50px}
+  .section{padding:72px 0}
+}
+@media (max-width:640px){
+  .svc-grid,.popular-grid,.price-grid{grid-template-columns:1fr}
+  .svc-tabs{gap:6px}
+  .tab-btn{font-size:.8rem;padding:8px 14px}
+}
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">What we handle</span>
+    <h1>Six services. <em>One team.</em></h1>
+    <p>Everything between "I need to register" and "my admission is confirmed." Pick a starting point — we take it from there.</p>
+  </div>
+</section>
+
+<!-- ALL SERVICES -->
+<section class="section">
+  <div class="container">
+    <div class="svc-tabs" id="svcTabs">
+      <button class="tab-btn active" data-cat="all">All services</button>
+      <button class="tab-btn" data-cat="exam">Exam services</button>
+      <button class="tab-btn" data-cat="cert">Certificates</button>
+      <button class="tab-btn" data-cat="admin">Admission</button>
+      <button class="tab-btn" data-cat="tut">Tutorials</button>
+    </div>
+
+    <div class="svc-grid" id="svcGrid">
+
+      <article class="svc-card" data-cat="exam">
+        <div class="svc-head">
+          <div class="ic"><i class="fas fa-book-open"></i></div>
+          <h3>O'Level services</h3>
+          <span class="badge">WAEC · NECO · NABTEB</span>
+        </div>
+        <div class="svc-body">
+          <p>Registration, result checking, and certificate handling for all Nigerian secondary exam bodies.</p>
+          <ul>
+            <li><i class="fas fa-circle-check"></i> Registration e-PINs &amp; scratch cards</li>
+            <li><i class="fas fa-circle-check"></i> Result checking &amp; printing</li>
+            <li><i class="fas fa-circle-check"></i> Certificate issuance &amp; verification</li>
+            <li><i class="fas fa-circle-check"></i> Statement of result processing</li>
+          </ul>
+          <div class="svc-price">
+            <span class="lbl">Starting from</span>
+            <span class="amt">₦2,500</span>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <a href="{{ url_for('public.contact') }}" class="btn btn-primary btn-sm">Request <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="svc-card" data-cat="exam">
+        <div class="svc-head">
+          <div class="ic"><i class="fas fa-pen-to-square"></i></div>
+          <h3>JAMB services</h3>
+          <span class="badge">UTME · DE · CAPS</span>
+        </div>
+        <div class="svc-body">
+          <p>Full JAMB support from profile code to admission acceptance on CAPS.</p>
+          <ul>
+            <li><i class="fas fa-circle-check"></i> UTME/DE e-PINs &amp; profile codes</li>
+            <li><i class="fas fa-circle-check"></i> CAPS issues resolved</li>
+            <li><i class="fas fa-circle-check"></i> Result printing &amp; admission letters</li>
+            <li><i class="fas fa-circle-check"></i> Course change &amp; institution transfer</li>
+          </ul>
+          <div class="svc-price">
+            <span class="lbl">Starting from</span>
+            <span class="amt">₦3,500</span>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <a href="{{ url_for('public.jamb') }}" class="btn btn-primary btn-sm">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="svc-card" data-cat="exam tut">
+        <div class="svc-head">
+          <div class="ic"><i class="fas fa-graduation-cap"></i></div>
+          <h3>A'Level services</h3>
+          <span class="badge">IJMB · JUPEB · Cambridge</span>
+        </div>
+        <div class="svc-body">
+          <p>Advanced level and international exam programmes for direct-entry and study-abroad routes.</p>
+          <ul>
+            <li><i class="fas fa-circle-check"></i> IJMB &amp; JUPEB registration</li>
+            <li><i class="fas fa-circle-check"></i> IELTS · SAT · TOEFL · GRE</li>
+            <li><i class="fas fa-circle-check"></i> Study materials &amp; past questions</li>
+            <li><i class="fas fa-circle-check"></i> Full tutorial support</li>
+          </ul>
+          <div class="svc-price">
+            <span class="lbl">Starting from</span>
+            <span class="amt">₦15,000</span>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <a href="{{ url_for('public.contact') }}" class="btn btn-primary btn-sm">Enroll <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="svc-card" data-cat="cert">
+        <div class="svc-head">
+          <div class="ic"><i class="fas fa-certificate"></i></div>
+          <h3>Certificates</h3>
+          <span class="badge">State of origin · Birth</span>
+        </div>
+        <div class="svc-body">
+          <p>State of origin, birth certificates, and LGA identification for all 36 states and the FCT.</p>
+          <ul>
+            <li><i class="fas fa-circle-check"></i> State of origin certificate</li>
+            <li><i class="fas fa-circle-check"></i> Birth certificate (NPC)</li>
+            <li><i class="fas fa-circle-check"></i> Local government identification</li>
+            <li><i class="fas fa-circle-check"></i> Delivery available nationwide</li>
+          </ul>
+          <div class="svc-price">
+            <span class="lbl">Starting from</span>
+            <span class="amt">₦5,000</span>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <a href="{{ url_for('public.contact') }}" class="btn btn-primary btn-sm">Order <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="svc-card" data-cat="admin">
+        <div class="svc-head">
+          <div class="ic"><i class="fas fa-building-columns"></i></div>
+          <h3>Admission processing</h3>
+          <span class="badge">Post-UTME · Mentorship</span>
+        </div>
+        <div class="svc-body">
+          <p>Guidance through Post-UTME, screening, and follow-up until your name is on the list.</p>
+          <ul>
+            <li><i class="fas fa-circle-check"></i> Post-UTME forms &amp; registration</li>
+            <li><i class="fas fa-circle-check"></i> School &amp; course selection guidance</li>
+            <li><i class="fas fa-circle-check"></i> Admission mentorship program</li>
+            <li><i class="fas fa-circle-check"></i> Course change &amp; transfer</li>
+          </ul>
+          <div class="svc-price">
+            <span class="lbl">Starting from</span>
+            <span class="amt">₦10,000</span>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <a href="{{ url_for('public.contact') }}" class="btn btn-primary btn-sm">Get started <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="svc-card" data-cat="cert admin">
+        <div class="svc-head">
+          <div class="ic"><i class="fas fa-fingerprint"></i></div>
+          <h3>NIN services</h3>
+          <span class="badge">NIMC · Biometrics</span>
+        </div>
+        <div class="svc-body">
+          <p>Enrolment, correction, and linkage — no queues, no wasted trips.</p>
+          <ul>
+            <li><i class="fas fa-circle-check"></i> NIN enrolment &amp; registration</li>
+            <li><i class="fas fa-circle-check"></i> NIN modification &amp; updates</li>
+            <li><i class="fas fa-circle-check"></i> NIN slip printing</li>
+            <li><i class="fas fa-circle-check"></i> JAMB/WAEC NIN linkage</li>
+          </ul>
+          <div class="svc-price">
+            <span class="lbl">Starting from</span>
+            <span class="amt">₦3,000</span>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <a href="{{ url_for('public.contact') }}" class="btn btn-primary btn-sm">Book <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" style="display:inline-flex">Most requested</span>
+      <h2>The three people <em>ask for first</em></h2>
+      <p>If you're not sure where to start, start here.</p>
+    </div>
+
+    <div class="popular-grid">
+      <div class="popular-card">
+        <div class="ic"><i class="fas fa-edit"></i></div>
+        <h3>JAMB UTME registration</h3>
+        <p>Complete registration: profile code, e-PIN, biometrics, and O'Level upload.</p>
+        <ul>
+          <li><i class="fas fa-circle-check"></i> Profile code generation</li>
+          <li><i class="fas fa-circle-check"></i> UTME e-PIN purchase</li>
+          <li><i class="fas fa-circle-check"></i> Biometric capture</li>
+        </ul>
+        <a href="{{ url_for('public.jamb') }}" class="btn btn-outline btn-sm" style="align-self:flex-start;margin-top:auto">Learn more →</a>
+      </div>
+      <div class="popular-card">
+        <div class="ic"><i class="fas fa-chart-line"></i></div>
+        <h3>WAEC result &amp; certificates</h3>
+        <p>Fast, reliable checking, printing, and original certificate collection.</p>
+        <ul>
+          <li><i class="fas fa-circle-check"></i> Result checking &amp; printing</li>
+          <li><i class="fas fa-circle-check"></i> Certificate issuance</li>
+          <li><i class="fas fa-circle-check"></i> Verification letters</li>
+        </ul>
+        <a href="{{ url_for('public.waec') }}" class="btn btn-outline btn-sm" style="align-self:flex-start;margin-top:auto">Learn more →</a>
+      </div>
+      <div class="popular-card">
+        <div class="ic"><i class="fas fa-file-signature"></i></div>
+        <h3>State of origin</h3>
+        <p>Authentic certificates for any of Nigeria's 36 states and the FCT.</p>
+        <ul>
+          <li><i class="fas fa-circle-check"></i> All 36 states + FCT</li>
+          <li><i class="fas fa-circle-check"></i> 3–5 day processing</li>
+          <li><i class="fas fa-circle-check"></i> Nationwide delivery</li>
+        </ul>
+        <a href="{{ url_for('public.contact') }}" class="btn btn-outline btn-sm" style="align-self:flex-start;margin-top:auto">Order now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" style="display:inline-flex">Bundles</span>
+      <h2>Three ways to <em>work with us</em></h2>
+      <p>Prices shown are starting points. Final cost depends on the specific service and school — we always quote before you pay.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Single service</h3>
+        <div class="amt">₦5,000<small> / service</small></div>
+        <p class="desc">One-off task — a registration, a certificate, a result check.</p>
+        <ul>
+          <li class="on"><i class="fas fa-circle-check"></i> Single service</li>
+          <li class="on"><i class="fas fa-circle-check"></i> 24–48 hour turnaround</li>
+          <li class="on"><i class="fas fa-circle-check"></i> WhatsApp support</li>
+          <li class="off"><i class="fas fa-circle-xmark"></i> Priority processing</li>
+        </ul>
+        <a href="{{ url_for('public.contact') }}" class="btn btn-outline">Start</a>
+      </div>
+
+      <div class="price-card featured">
+        <span class="pricing-tag">Popular</span>
+        <h3>Full support</h3>
+        <div class="amt">₦25,000<small> / package</small></div>
+        <p class="desc">Multiple services bundled for a single academic year — the standard for serious students.</p>
+        <ul>
+          <li class="on"><i class="fas fa-circle-check"></i> 3 services included</li>
+          <li class="on"><i class="fas fa-circle-check"></i> 12–24 hour processing</li>
+          <li class="on"><i class="fas fa-circle-check"></i> Priority support</li>
+          <li class="on"><i class="fas fa-circle-check"></i> Free consultation</li>
+        </ul>
+        <a href="{{ url_for('public.contact') }}" class="btn btn-primary">Choose this</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Full ride</h3>
+        <div class="amt">₦50,000<small> / year</small></div>
+        <p class="desc">Every service we offer, unlimited, with personal follow-up. For families who want it fully handled.</p>
+        <ul>
+          <li class="on"><i class="fas fa-circle-check"></i> All services included</li>
+          <li class="on"><i class="fas fa-circle-check"></i> 6–12 hour express</li>
+          <li class="on"><i class="fas fa-circle-check"></i> 24/7 direct line</li>
+          <li class="on"><i class="fas fa-circle-check"></i> Personal mentor</li>
+        </ul>
+        <a href="{{ url_for('public.contact') }}" class="btn btn-outline">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section alt">
+  <div class="container">
+    <div style="background:var(--choco);border-radius:var(--r);padding:100px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)">
+      <div style="position:absolute;inset:16px;border:1px solid rgba(212,165,116,.35);border-radius:10px;pointer-events:none"></div>
+      <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,5vw,3.6rem);color:var(--cream);max-width:24ch;margin:0 auto 22px;letter-spacing:-.02em;position:relative">
+        Need a <em style="font-style:italic;color:var(--gold)">custom bundle?</em>
+      </h2>
+      <p style="color:rgba(251,246,239,.78);max-width:52ch;margin:0 auto 36px;position:relative">Tell us your course, your school, your timeline. We'll build the package around what you actually need.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative">
+        <a href="https://wa.me/2347079396111" target="_blank" rel="noopener" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Talk to us</a>
+        <a href="{{ url_for('public.contact') }}" class="btn btn-light">Contact form</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var tabs = document.querySelectorAll('#svcTabs .tab-btn');
+  var cards = document.querySelectorAll('#svcGrid .svc-card');
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabs.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var cat = btn.getAttribute('data-cat');
+      cards.forEach(function(card){
+        if (cat === 'all' || card.getAttribute('data-cat').split(' ').includes(cat)){
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+})();
+</script>
+{% endblock %}

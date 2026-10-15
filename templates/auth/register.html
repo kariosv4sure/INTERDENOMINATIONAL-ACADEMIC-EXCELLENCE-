@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Create account — I.A.E™{% endblock %}
+
+{% block extra_css %}
+.auth-wrap{padding:70px 0 110px;background:var(--cream);min-height:calc(100vh - 78px)}
+.auth-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:0;border:1.5px solid var(--cream-3);border-radius:var(--r);overflow:hidden;background:var(--cream);box-shadow:var(--shadow-lg);max-width:1060px;margin-inline:auto}
+.auth-side{background:var(--choco);color:var(--cream);padding:56px 48px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.auth-side::before{content:"";position:absolute;width:420px;height:420px;right:-140px;top:-140px;border-radius:50%;border:1px solid rgba(212,165,116,.2)}
+.auth-side::after{content:"";position:absolute;width:260px;height:260px;right:-60px;top:-60px;border-radius:50%;border:1px solid rgba(212,165,116,.14)}
+.auth-side-inner{position:relative;z-index:1}
+.auth-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:rgba(212,165,116,.12);border:1px solid rgba(212,165,116,.35);font-family:var(--serif);font-weight:700;font-size:.9rem;color:var(--gold);margin-bottom:28px}
+.auth-side h2{font-family:var(--serif);font-size:clamp(1.9rem,3.4vw,2.6rem);color:var(--cream);line-height:1.15;margin-bottom:16px;letter-spacing:-.01em}
+.auth-side h2 em{font-style:italic;color:var(--gold)}
+.auth-side p{color:rgba(251,246,239,.72);font-size:1rem;max-width:38ch;margin-bottom:36px}
+.auth-features{display:grid;gap:14px}
+.auth-features li{display:flex;align-items:center;gap:14px;color:var(--cream-3);font-size:.95rem}
+.auth-features i{color:var(--gold);font-size:.9rem;width:20px;text-align:center}
+
+.auth-card{padding:52px 48px;display:flex;flex-direction:column;justify-content:center}
+.auth-header{margin-bottom:28px}
+.auth-header h3{font-family:var(--serif);font-size:2rem;color:var(--choco);margin-bottom:8px;letter-spacing:-.01em}
+.auth-header p{color:var(--muted);font-size:.95rem}
+
+.auth-form .form-group{margin-bottom:18px}
+.auth-form label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--choco-2);margin-bottom:8px}
+.auth-form label i{color:var(--caramel-2);margin-right:6px;font-size:.85rem}
+.auth-form label small{text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);font-size:.78rem;margin-left:6px}
+.auth-form input[type=email],
+.auth-form input[type=password],
+.auth-form input[type=text],
+.auth-form input[type=tel]{width:100%;padding:13px 16px;border:1.5px solid var(--cream-3);border-radius:10px;font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--cream);transition:border-color .2s ease,background-color .2s ease}
+.auth-form input:focus{outline:none;border-color:var(--caramel);background:#fff}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+.password-wrapper{position:relative}
+.password-wrapper input{padding-right:48px}
+.toggle-password{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:8px;color:var(--muted);display:grid;place-items:center;font-size:.95rem;transition:color .2s,background-color .2s}
+.toggle-password:hover{color:var(--choco);background:var(--cream-2)}
+
+.pw-meter{margin-top:8px;height:5px;border-radius:999px;background:var(--cream-3);overflow:hidden}
+.pw-meter span{display:block;height:100%;width:0;background:var(--caramel);transition:width .25s ease,background-color .25s ease}
+.pw-meter.weak span{background:var(--danger)}
+.pw-meter.fair span{background:var(--caramel)}
+.pw-meter.strong span{background:var(--green)}
+.pw-hint{font-size:.78rem;color:var(--muted);margin-top:6px}
+
+.terms-line{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--choco-2);margin:6px 0 22px;line-height:1.5}
+.terms-line input{width:16px;height:16px;accent-color:var(--caramel);margin-top:3px;cursor:pointer}
+.terms-line a{color:var(--caramel-2);font-weight:600;border-bottom:1.5px solid transparent}
+.terms-line a:hover{border-bottom-color:currentColor}
+
+.auth-btn{width:100%;justify-content:center;padding:16px 30px;font-size:.95rem}
+
+.auth-footer{text-align:center;font-size:.92rem;color:var(--muted);padding-top:22px;margin-top:26px;border-top:1px solid var(--cream-3)}
+.auth-footer a{color:var(--caramel-2);font-weight:600;border-bottom:1.5px solid transparent;transition:border-color .2s,color .2s}
+.auth-footer a:hover{color:var(--choco);border-bottom-color:currentColor}
+
+@media (max-width:900px){
+  .auth-grid{grid-template-columns:1fr}
+  .auth-side{padding:44px 32px}
+  .auth-side p{margin-bottom:26px}
+  .auth-features{display:none}
+  .auth-card{padding:40px 28px}
+}
+@media (max-width:520px){
+  .auth-wrap{padding:40px 0 80px}
+  .auth-side{padding:36px 24px}
+  .auth-card{padding:32px 22px}
+  .auth-header h3{font-size:1.7rem}
+  .form-row{grid-template-columns:1fr}
+}
+{% endblock %}
+
+{% block content %}
+<section class="auth-wrap">
+  <div class="container">
+    <div class="auth-grid">
+
+      <aside class="auth-side">
+        <div class="auth-side-inner">
+          <span class="auth-badge"><i class="fas fa-graduation-cap"></i> I.A.E™</span>
+          <h2>Start your <em>journey.</em></h2>
+          <p>One free account. Everything you need from JAMB registration to the day the admission letter arrives.</p>
+
+          <ul class="auth-features">
+            <li><i class="fas fa-circle-check"></i> <span>Free — no card required</span></li>
+            <li><i class="fas fa-circle-check"></i> <span>AI assistant, 24/7</span></li>
+            <li><i class="fas fa-circle-check"></i> <span>Track every step</span></li>
+            <li><i class="fas fa-circle-check"></i> <span>Human support on WhatsApp</span></li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="auth-card">
+        <header class="auth-header">
+          <h3>Create account</h3>
+          <p>Takes two minutes. Free forever.</p>
+        </header>
+
+        <form method="POST" action="{{ url_for('auth.register') }}" class="auth-form" id="registerForm">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="full_name"><i class="fas fa-user"></i> Full name <small>optional</small></label>
+              <input type="text" id="full_name" name="full_name"
+                     placeholder="Adaeze Okonkwo"
+                     autocomplete="name"
+                     value="{{ request.form.get('full_name', '') }}">
+            </div>
+
+            <div class="form-group">
+              <label for="phone"><i class="fas fa-phone"></i> Phone <small>optional</small></label>
+              <input type="tel" id="phone" name="phone"
+                     placeholder="0803 000 0000"
+                     autocomplete="tel"
+                     value="{{ request.form.get('phone', '') }}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="username"><i class="fas fa-at"></i> Username</label>
+            <input type="text" id="username" name="username" required
+                   placeholder="adaeze"
+                   autocomplete="username"
+                   minlength="3" maxlength="80"
+                   value="{{ request.form.get('username', '') }}">
+          </div>
+
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email address</label>
+            <input type="email" id="email" name="email" required
+                   placeholder="you@example.com"
+                   autocomplete="email"
+                   value="{{ request.form.get('email', '') }}">
+          </div>
+
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="password" name="password" required
+                     placeholder="At least 8 characters"
+                     autocomplete="new-password"
+                     minlength="8">
+              <button type="button" class="toggle-password" aria-label="Show password" data-target="password" data-icon="pwIcon">
+                <i class="fas fa-eye" id="pwIcon"></i>
+              </button>
+            </div>
+            <div class="pw-meter" id="pwMeter"><span></span></div>
+            <div class="pw-hint" id="pwHint">Use 8+ characters. Mix letters, numbers, and a symbol.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm_password"><i class="fas fa-lock"></i> Confirm password</label>
+            <div class="password-wrapper">
+              <input type="password" id="confirm_password" name="confirm_password" required
+                     placeholder="Repeat your password"
+                     autocomplete="new-password"
+                     minlength="8">
+              <button type="button" class="toggle-password" aria-label="Show password" data-target="confirm_password" data-icon="cpIcon">
+                <i class="fas fa-eye" id="cpIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <label class="terms-line">
+            <input type="checkbox" name="terms" required>
+            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary auth-btn">
+            Create account <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  /* Show/hide password toggles */
+  document.querySelectorAll('.toggle-password').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var targetId = btn.getAttribute('data-target');
+      var iconId = btn.getAttribute('data-icon');
+      var input = document.getElementById(targetId);
+      var icon = document.getElementById(iconId);
+      if (!input || !icon) return;
+      if (input.type === 'password'){
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  });
+
+  /* Password strength meter */
+  var pw = document.getElementById('password');
+  var meter = document.getElementById('pwMeter');
+  var hint = document.getElementById('pwHint');
+  if (!pw || !meter) return;
+
+  function score(v){
+    var s = 0;
+    if (v.length >= 8) s++;
+    if (v.length >= 12) s++;
+    if (/[A-Z]/.test(v) && /[a-z]/.test(v)) s++;
+    if (/\d/.test(v)) s++;
+    if (/[^A-Za-z0-9]/.test(v)) s++;
+    return s; // 0-5
+  }
+
+  pw.addEventListener('input', function(){
+    var v = pw.value;
+    var s = score(v);
+    var cls = '', pct = 0, msg = 'Use 8+ characters. Mix letters, numbers, and a symbol.';
+    if (v.length === 0){ cls=''; pct=0; }
+    else if (s <= 2){ cls='weak'; pct=33; msg='Weak — add more characters and variety.'; }
+    else if (s === 3 || s === 4){ cls='fair'; pct=66; msg='Fair — almost there.'; }
+    else { cls='strong'; pct=100; msg='Strong password.'; }
+
+    meter.className = 'pw-meter ' + cls;
+    meter.querySelector('span').style.width = pct + '%';
+    hint.textContent = msg;
+  });
+
+  /* Confirm password match feedback */
+  var confirm = document.getElementById('confirm_password');
+  if (confirm){
+    confirm.addEventListener('input', function(){
+      if (confirm.value && confirm.value !== pw.value){
+        confirm.setCustomValidity('Passwords do not match.');
+      } else {
+        confirm.setCustomValidity('');
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

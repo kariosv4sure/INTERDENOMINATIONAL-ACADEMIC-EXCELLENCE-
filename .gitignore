@@ -1,48 +1,38 @@
-# Environment variables
+# Environment
 .env
 .env.local
-.env.production
+venv/
+env/
+.venv/
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
 .Python
-env/
-venv/
-.venv/
-ENV/
-env.bak/
-venv.bak/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
 
 # Database
 *.db
-*.sqlite
 *.sqlite3
 instance/
 
 # Flask
-instance/
-.flaskenv
-.wsgi
+.webassets-cache
 
-# IDE
+# Editor
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# OS
 .DS_Store
+Thumbs.db
 
 # Logs
 *.log
-logs/
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Project specific
-*.pyc
-static/uploads/

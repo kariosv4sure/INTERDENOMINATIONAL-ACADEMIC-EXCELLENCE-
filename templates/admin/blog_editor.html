@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit' if post else 'New' }} post — I.A.E™ Admin{% endblock %}
+
+{% block extra_css %}
+.admin-shell{padding:60px 0 120px;background:var(--cream);min-height:calc(100vh - 78px)}
+
+.admin-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:32px;padding-bottom:30px;border-bottom:1px solid var(--cream-3)}
+.admin-head h1{font-family:var(--serif);font-size:clamp(1.8rem,3.6vw,2.6rem);color:var(--choco);letter-spacing:-.02em;line-height:1.1}
+.admin-head h1 em{font-style:italic;color:var(--caramel-2)}
+.admin-head p{color:var(--muted);margin-top:6px;font-size:.96rem}
+.admin-head-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.editor-layout{display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start}
+
+/* MAIN COLUMN */
+.editor-main{display:flex;flex-direction:column;gap:22px}
+.field{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:24px 26px}
+.field > label{display:block;font-family:var(--mono,ui-monospace,monospace);font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.field > label small{text-transform:none;letter-spacing:0;color:var(--muted);font-weight:400;font-size:.85em;margin-left:6px;font-family:var(--sans,Inter,sans-serif)}
+.field input[type=text],
+.field input[type=number],
+.field textarea{width:100%;padding:14px 16px;border:1.5px solid var(--cream-3);border-radius:10px;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--cream-2);transition:border-color .2s ease,background-color .2s ease;line-height:1.6}
+.field input:focus,
+.field textarea:focus{outline:none;border-color:var(--caramel);background:#fff}
+.field textarea{resize:vertical;min-height:90px}
+
+.field input[name=title]{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--choco);letter-spacing:-.01em}
+
+.field textarea[name=body]{min-height:480px;font-family:var(--mono,ui-monospace,monospace);font-size:.92rem;line-height:1.75}
+.field textarea[name=excerpt]{min-height:80px}
+
+.field-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.field-head label{font-family:var(--mono,ui-monospace,monospace);font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0}
+.field-head .counter{font-family:var(--mono,ui-monospace,monospace);font-size:.72rem;color:var(--muted)}
+.field-head .counter.warn{color:var(--caramel-2)}
+.field-head .counter.danger{color:var(--danger)}
+.field-hint{font-size:.82rem;color:var(--muted);margin-top:8px;line-height:1.5}
+
+/* SIDEBAR */
+.editor-side{display:flex;flex-direction:column;gap:18px;position:sticky;top:100px}
+.side-card{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:22px 24px}
+.side-card h3{font-family:var(--mono,ui-monospace,monospace);font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.side-card h3 i{color:var(--caramel-2)}
+
+.publish-state{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--cream-2);border-radius:10px;margin-bottom:16px;font-size:.88rem;color:var(--choco-2)}
+.publish-state i{font-size:1rem}
+.publish-state.live{background:rgba(31,122,76,.08);color:var(--green)}
+.publish-state.draft{background:rgba(122,100,85,.1);color:var(--muted)}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--cream-3)}
+.toggle-row:last-of-type{border-bottom:1px solid var(--cream-3);margin-bottom:16px}
+.toggle-row .lbl{font-size:.94rem;color:var(--choco-2);font-weight:500}
+.switch{position:relative;display:inline-block;width:44px;height:26px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--cream-3);border-radius:999px;cursor:pointer;transition:background-color .25s ease}
+.slider::before{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s ease;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.switch input:checked + .slider{background:var(--green)}
+.switch input:checked + .slider::before{transform:translateX(18px)}
+.switch input:focus-visible + .slider{outline:2px solid var(--caramel);outline-offset:2px}
+
+.slug-preview{font-family:var(--mono,ui-monospace,monospace);font-size:.78rem;color:var(--muted);word-break:break-all;line-height:1.5;padding:10px 12px;background:var(--cream-2);border-radius:8px;border:1px dashed var(--cream-3)}
+.slug-preview strong{color:var(--choco);font-weight:700}
+
+.btn-block{width:100%;justify-content:center}
+.btn-stack{display:flex;flex-direction:column;gap:10px}
+
+.help-list{display:flex;flex-direction:column;gap:10px;font-size:.82rem;color:var(--muted);line-height:1.55}
+.help-list div{display:flex;gap:10px;align-items:flex-start}
+.help-list i{color:var(--caramel-2);font-size:.75rem;margin-top:4px;flex-shrink:0;width:12px}
+.help-list code{font-family:var(--mono,ui-monospace,monospace);background:var(--cream-2);padding:1px 6px;border-radius:4px;font-size:.9em;color:var(--choco)}
+
+/* PREVIEW PREVIEW */
+.preview-thumb{aspect-ratio:16/10;background:var(--cream-2);border:1px solid var(--cream-3);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.preview-thumb img{width:100%;height:100%;object-fit:cover}
+.preview-meta{font-family:var(--mono,ui-monospace,monospace);font-size:.72rem;color:var(--muted);line-height:1.5;word-break:break-all}
+.preview-meta strong{color:var(--choco);font-weight:700}
+
+@media (max-width:1000px){
+  .editor-layout{grid-template-columns:1fr}
+  .editor-side{position:static}
+}
+@media (max-width:700px){
+  .admin-shell{padding:40px 0 90px}
+  .field{padding:18px 18px}
+  .side-card{padding:18px 20px}
+  .field textarea[name=body]{min-height:320px;font-size:.88rem}
+}
+{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+  <div class="container">
+
+    <!-- HEAD -->
+    <div class="admin-head">
+      <div>
+        <span class="eyebrow">Admin · Blog</span>
+        <h1>{{ 'Edit post' if post else 'Write a <em>new post.</em>'|safe }}</h1>
+        <p>{{ 'Update the draft or the live version — changes apply on save.' if post else 'Fill the fields, hit save, and it appears at /blog.' }}</p>
+      </div>
+      <div class="admin-head-actions">
+        <a href="{{ url_for('admin.blog.index') }}" class="btn btn-outline btn-sm">
+          <i class="fas fa-arrow-left"></i> All posts
+        </a>
+      </div>
+    </div>
+
+    <form method="POST" id="editorForm" action="{{ url_for('admin.blog.edit', post_id=post.id) if post else url_for('admin.blog.new') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="editor-layout">
+
+        <!-- MAIN -->
+        <div class="editor-main">
+
+          <div class="field">
+            <label for="title">Title <small>(the headline)</small></label>
+            <input type="text" id="title" name="title" required maxlength="200"
+                   placeholder="e.g. JAMB 2026: the registration guide nobody hands you"
+                   value="{{ post.title if post else '' }}">
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="excerpt">Excerpt <small>(teaser shown on cards)</small></label>
+              <span class="counter" id="excerptCount">0 / 300</span>
+            </div>
+            <textarea id="excerpt" name="excerpt" required maxlength="300"
+                      placeholder="One or two sentences that make someone want to read the full post.">{{ post.excerpt if post else '' }}</textarea>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="body">Body <small>(plain text or HTML)</small></label>
+            </div>
+            <textarea id="body" name="body" required
+                      placeholder="Write your post here. Blank lines become paragraphs. Simple HTML like <strong>bold</strong>, <a href=&quot;...&quot;>links</a>, and <ul><li>lists</li></ul> works.">{{ post.body if post else '' }}</textarea>
+            <div class="field-hint">
+              Line breaks are preserved. Wrap paragraphs in &lt;p&gt;...&lt;/p&gt; if you want tight control, or leave blank lines between blocks.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="editor-side">
+
+          <!-- Publish state -->
+          <div class="side-card">
+            <h3><i class="fas fa-bullhorn"></i> Publish</h3>
+
+            <div class="publish-state {{ 'live' if post and post.published else 'draft' }}" id="publishState">
+              {% if post and post.published %}
+                <i class="fas fa-circle-check"></i> Live on the site
+              {% else %}
+                <i class="fas fa-pen"></i> Draft — not yet visible
+              {% endif %}
+            </div>
+
+            <div class="toggle-row">
+              <span class="lbl">Publish now</span>
+              <label class="switch">
+                <input type="checkbox" name="published" id="publishedSwitch"
+                       {% if not post or post.published %}checked{% endif %}>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="btn-stack">
+              <button type="submit" class="btn btn-primary btn-block">
+                {{ 'Save changes' if post else 'Publish post' }} <i class="fas fa-arrow-right"></i>
+              </button>
+              <a href="{{ url_for('admin.blog.index') }}" class="btn btn-outline btn-block">
+                Cancel
+              </a>
+            </div>
+          </div>
+
+          <!-- Meta -->
+          <div class="side-card">
+            <h3><i class="fas fa-tag"></i> Meta</h3>
+
+            <div class="field" style="border:none;padding:0;background:none;margin-bottom:16px">
+              <label for="category" style="margin-bottom:8px">Category</label>
+              <input type="text" id="category" name="category" list="cats"
+                     value="{{ post.category if post else 'General' }}"
+                     style="background:var(--cream-2)">
+              <datalist id="cats">
+                <option value="JAMB">
+                <option value="O'Level">
+                <option value="Admission">
+                <option value="A'Level">
+                <option value="NIN">
+                <option value="General">
+              </datalist>
+            </div>
+
+            <div class="field" style="border:none;padding:0;background:none;margin-bottom:16px">
+              <label for="read_minutes" style="margin-bottom:8px">Read time (minutes)</label>
+              <input type="number" id="read_minutes" name="read_minutes" min="1" max="60"
+                     value="{{ post.read_minutes if post else 5 }}"
+                     style="background:var(--cream-2)">
+            </div>
+
+            <div class="field" style="border:none;padding:0;background:none">
+              <label for="cover_image" style="margin-bottom:8px">Cover image path</label>
+              <input type="text" id="cover_image" name="cover_image"
+                     placeholder="images/blog/your-image.jpg"
+                     value="{{ post.cover_image if post else '' }}"
+                     style="background:var(--cream-2);font-family:var(--mono,ui-monospace,monospace);font-size:.85rem">
+              <div class="field-hint" style="margin-top:8px">Relative to <code style="font-family:var(--mono,ui-monospace,monospace);background:var(--cream-2);padding:1px 6px;border-radius:4px">/static/</code></div>
+            </div>
+          </div>
+
+          <!-- Slug preview -->
+          <div class="side-card">
+            <h3><i class="fas fa-link"></i> URL preview</h3>
+            <div class="slug-preview" id="slugPreview">
+              /blog/<strong id="slugText">{{ post.slug if post else 'your-post-slug' }}</strong>
+            </div>
+          </div>
+
+          <!-- Live card preview -->
+          {% if post and post.cover_image %}
+          <div class="side-card">
+            <h3><i class="fas fa-image"></i> Cover preview</h3>
+            <div class="preview-thumb">
+              <img src="{{ url_for('static', filename=post.cover_image) }}"
+                   alt=""
+                   onerror="this.style.display='none';this.parentElement.style.background='var(--cream-3)'">
+            </div>
+            <div class="preview-meta"><strong>Path:</strong> {{ post.cover_image }}</div>
+          </div>
+          {% endif %}
+
+          <!-- Help -->
+          <div class="side-card">
+            <h3><i class="fas fa-circle-info"></i> Quick tips</h3>
+            <div class="help-list">
+              <div><i class="fas fa-check"></i> <span>Leave the title short — long headlines get cut off in lists.</span></div>
+              <div><i class="fas fa-check"></i> <span>Excerpt is what shows on the <code>/blog</code> card and on the homepage.</span></div>
+              <div><i class="fas fa-check"></i> <span>Slug is generated from the title automatically — it updates on save.</span></div>
+              <div><i class="fas fa-check"></i> <span>Set a cover image or the card falls back to a plain background.</span></div>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </form>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var title    = document.getElementById('title');
+  var excerpt  = document.getElementById('excerpt');
+  var body     = document.getElementById('body');
+  var slugText = document.getElementById('slugText');
+  var excerptCount = document.getElementById('excerptCount');
+  var publishSwitch = document.getElementById('publishedSwitch');
+  var publishState  = document.getElementById('publishState');
+
+  function slugify(str){
+    return str.toLowerCase().trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  /* Live slug preview from title (only when title changes) */
+  var isEditing = {{ 'true' if post else 'false' }};
+  if (title && slugText){
+    title.addEventListener('input', function(){
+      var s = slugify(title.value);
+      slugText.textContent = s || 'your-post-slug';
+    });
+  }
+
+  /* Excerpt character counter */
+  function updateCount(){
+    if (!excerpt || !excerptCount) return;
+    var len = excerpt.value.length;
+    excerptCount.textContent = len + ' / 300';
+    excerptCount.classList.toggle('warn', len > 240 && len <= 285);
+    excerptCount.classList.toggle('danger', len > 285);
+  }
+  if (excerpt){
+    excerpt.addEventListener('input', updateCount);
+    updateCount();
+  }
+
+  /* Publish switch — updates the little badge label */
+  if (publishSwitch && publishState){
+    publishSwitch.addEventListener('change', function(){
+      if (publishSwitch.checked){
+        publishState.classList.remove('draft');
+        publishState.classList.add('live');
+        publishState.innerHTML = '<i class="fas fa-circle-check"></i> Live on the site';
+      } else {
+        publishState.classList.remove('live');
+        publishState.classList.add('draft');
+        publishState.innerHTML = '<i class="fas fa-pen"></i> Draft — not yet visible';
+      }
+    });
+  }
+
+  /* Cmd/Ctrl + S submits */
+  document.addEventListener('keydown', function(e){
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's'){
+      e.preventDefault();
+      document.getElementById('editorForm').requestSubmit();
+    }
+  });
+
+  /* Warn on unload if the form is dirty */
+  var form = document.getElementById('editorForm');
+  var dirty = false;
+  form.addEventListener('input', function(){ dirty = true; });
+  form.addEventListener('submit', function(){ dirty = false; });
+  window.addEventListener('beforeunload', function(e){
+    if (!dirty) return;
+    e.preventDefault();
+    e.returnValue = '';
+  });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}Contact — I.A.E™{% endblock %}
+{% block description %}Get in touch with I.A.E™ — WhatsApp, phone, email, or the contact form. Fast replies on weekdays.{% endblock %}
+
+{% block extra_css %}
+.page-hero{padding:80px 0 60px;background:var(--cream-2);border-bottom:1px solid var(--cream-3);position:relative;overflow:hidden}
+.page-hero::before{content:"";position:absolute;width:520px;height:520px;right:-180px;top:-180px;border-radius:50%;border:1px solid rgba(212,165,116,.18)}
+.page-hero .container{position:relative;z-index:1}
+.page-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;color:var(--choco);letter-spacing:-.02em;max-width:20ch;margin-top:16px}
+.page-hero h1 em{font-style:italic;color:var(--caramel-2)}
+.page-hero p{color:var(--muted);max-width:56ch;margin-top:20px;font-size:1.08rem}
+
+.section{padding:100px 0;background:var(--cream)}
+.section.alt{background:var(--cream-2)}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+.contact-col h2{font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--choco);letter-spacing:-.01em;margin-bottom:12px}
+.contact-col > p{color:var(--muted);font-size:1rem;margin-bottom:32px;max-width:52ch}
+
+.info-card{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--cream-3)}
+.info-card:last-of-type{border-bottom:none}
+.info-card .ic{width:48px;height:48px;border-radius:14px;background:var(--cream-2);color:var(--caramel-2);display:grid;place-items:center;font-size:1.15rem;flex-shrink:0}
+.info-card h4{font-family:var(--serif);font-size:1.08rem;color:var(--choco);margin-bottom:6px;letter-spacing:-.01em}
+.info-card p,.info-card a{color:var(--muted);font-size:.94rem;line-height:1.55}
+.info-card a{color:var(--choco-2);font-weight:600;border-bottom:1.5px solid transparent;transition:border-color .2s}
+.info-card a:hover{color:var(--choco);border-bottom-color:currentColor}
+
+.whatsapp-card{background:var(--choco);color:var(--cream);border-radius:var(--r);padding:32px 30px;margin-top:32px;position:relative;overflow:hidden}
+.whatsapp-card::before{content:"";position:absolute;width:280px;height:280px;right:-90px;top:-90px;border-radius:50%;border:1px solid rgba(212,165,116,.18)}
+.whatsapp-card .inner{position:relative;z-index:1}
+.whatsapp-card .ic{width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px}
+.whatsapp-card h3{font-family:var(--serif);font-size:1.4rem;color:var(--cream);margin-bottom:10px;letter-spacing:-.01em}
+.whatsapp-card p{color:rgba(251,246,239,.78);font-size:.96rem;line-height:1.6;margin-bottom:22px}
+.whatsapp-card .btn{background:var(--green);color:#fff;border-color:var(--green)}
+.whatsapp-card .btn:hover{background:#1a6540;border-color:#1a6540;color:#fff}
+
+.socials-row{display:flex;gap:10px;margin-top:32px;padding-top:26px;border-top:1px solid var(--cream-3);flex-wrap:wrap}
+.socials-row a{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--cream-3);color:var(--choco-2);display:grid;place-items:center;transition:all .2s ease;font-size:.95rem}
+.socials-row a:hover{background:var(--choco);border-color:var(--choco);color:var(--gold);transform:translateY(-3px)}
+
+/* FORM */
+.contact-form-wrap{background:var(--cream);border:1.5px solid var(--cream-3);border-radius:var(--r);padding:40px 36px}
+.contact-form-wrap h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2rem);color:var(--choco);letter-spacing:-.01em;margin-bottom:10px}
+.contact-form-wrap > p{color:var(--muted);font-size:.96rem;margin-bottom:28px}
+
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--choco-2);margin-bottom:8px}
+.form-group label small{text-transform:none;letter-spacing:0;color:var(--muted);font-weight:400;font-size:.78rem;margin-left:4px}
+.form-group input[type=text],
+.form-group input[type=email],
+.form-group input[type=tel],
+.form-group select,
+.form-group textarea{width:100%;padding:13px 16px;border:1.5px solid var(--cream-3);border-radius:10px;font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--cream-2);transition:border-color .2s ease,background-color .2s ease}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{outline:none;border-color:var(--caramel);background:#fff}
+.form-group textarea{resize:vertical;min-height:130px;line-height:1.6}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%237A6455' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+.form-note{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--muted);margin-top:16px;line-height:1.5}
+.form-note i{color:var(--caramel-2);margin-top:3px;flex-shrink:0}
+
+.success-flash{display:none;align-items:center;gap:12px;padding:14px 18px;background:rgba(31,122,76,.1);border:1px solid rgba(31,122,76,.3);border-radius:10px;color:var(--green);font-size:.94rem;font-weight:500;margin-bottom:22px}
+.success-flash.show{display:flex}
+.success-flash i{font-size:1.1rem}
+
+@media (max-width:900px){
+  .page-hero{padding:60px 0 50px}
+  .section{padding:72px 0}
+  .contact-grid{grid-template-columns:1fr;gap:44px}
+}
+@media (max-width:520px){
+  .contact-form-wrap{padding:30px 22px}
+  .whatsapp-card{padding:26px 22px}
+}
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Contact us</span>
+    <h1>Get in <em>touch.</em></h1>
+    <p>WhatsApp, call, email, or the form — whichever is easiest. We reply within 2 hours on weekdays. If it's urgent, always call.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: contact info -->
+      <div class="contact-col">
+        <h2>Reach us directly</h2>
+        <p>Every service we run starts with a conversation. Tell us your course, your target school, and your timeline — we'll tell you what's possible.</p>
+
+        <div class="info-card">
+          <div class="ic"><i class="fas fa-phone"></i></div>
+          <div>
+            <h4>Phone</h4>
+            <p><a href="tel:07079396111">0707 939 6111</a> · <a href="tel:08163065109">0816 306 5109</a></p>
+            <p style="font-size:.82rem;margin-top:4px">Mon–Sat · 8am – 7pm WAT</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ic"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h4>Email</h4>
+            <p><a href="mailto:mosesdanielfiyinfoluwa08@gmail.com">mosesdanielfiyinfoluwa08@gmail.com</a></p>
+            <p style="font-size:.82rem;margin-top:4px">Replies within 24 hours</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="ic"><i class="fas fa-clock"></i></div>
+          <div>
+            <h4>Office hours</h4>
+            <p>Mon–Fri: 9am – 6pm</p>
+            <p>Saturday: 10am – 2pm</p>
+            <p>Sunday: Closed</p>
+          </div>
+        </div>
+
+        <!-- WhatsApp quick card -->
+        <div class="whatsapp-card">
+          <div class="inner">
+            <div class="ic"><i class="fab fa-whatsapp"></i></div>
+            <h3>Fastest way to reach us</h3>
+            <p>WhatsApp is where we live. Send a message, get an answer, and keep the whole conversation in one thread — no email chains, no forms.</p>
+            <a href="https://wa.me/2347079396111?text=Hello%21%20I%20need%20assistance%20with%20I.A.E%20services."
+               target="_blank" rel="noopener" class="btn">
+              <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="socials-row">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/2347079396111" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <!-- RIGHT: contact form -->
+      <div class="contact-form-wrap">
+        <h2>Send a message</h2>
+        <p>Fill the form and we'll open WhatsApp with your details pre-filled — you just hit send.</p>
+
+        <div id="successFlash" class="success-flash">
+          <i class="fas fa-check-circle"></i>
+          <span>Opening WhatsApp with your message…</span>
+        </div>
+
+        <form id="contactForm" novalidate>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" required placeholder="Adaeze Okonkwo">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" required placeholder="you@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">WhatsApp number <small>(so we can reply)</small></label>
+            <input type="tel" id="phone" name="phone" required placeholder="0803 000 0000">
+          </div>
+
+          <div class="form-group">
+            <label for="service">What do you need?</label>
+            <select id="service" name="service" required>
+              <option value="">Select a service</option>
+              <option value="JAMB Registration/Tutorial">JAMB registration / tutorial</option>
+              <option value="WAEC Services">WAEC services</option>
+              <option value="O'LEVEL Services">O'Level services (NECO/NABTEB)</option>
+              <option value="Certificates">Certificates (State of Origin / Birth)</option>
+              <option value="Admission Processing">Admission processing</option>
+              <option value="NIN Services">NIN services</option>
+              <option value="Other">Something else</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="Tell us your course, target school, and what you need help with…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px 30px">
+            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+          </button>
+
+          <p class="form-note">
+            <i class="fas fa-lock"></i>
+            <span>Your details stay with us. We open WhatsApp on your device — nothing is sent from our server.</span>
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var form = document.getElementById('contactForm');
+  var flash = document.getElementById('successFlash');
+  if (!form) return;
+
+  var WHATSAPP = '2347079396111';
+  var serviceLabels = {
+    'JAMB Registration/Tutorial': 'JAMB registration / tutorial',
+    'WAEC Services': 'WAEC services',
+    "O'LEVEL Services": "O'Level services",
+    'Certificates': 'Certificates',
+    'Admission Processing': 'Admission processing',
+    'NIN Services': 'NIN services',
+    'Other': 'Something else'
+  };
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var name    = document.getElementById('name').value.trim();
+    var email   = document.getElementById('email').value.trim();
+    var phone   = document.getElementById('phone').value.trim();
+    var service = document.getElementById('service').value;
+    var message = document.getElementById('message').value.trim();
+
+    /* Native-ish validation without blocking the send */
+    if (!name || !email || !phone || !service || !message){
+      /* Highlight the empty field */
+      [['name',name],['email',email],['phone',phone],['service',service],['message',message]].forEach(function(pair){
+        var el = document.getElementById(pair[0]);
+        el.style.borderColor = pair[1] ? '' : 'var(--danger)';
+      });
+      return;
+    }
+
+    var serviceLabel = serviceLabels[service] || service;
+
+    var text =
+      '*NEW INQUIRY · I.A.E WEBSITE*\n\n' +
+      '👤 Name: ' + name + '\n' +
+      '📧 Email: ' + email + '\n' +
+      '📱 WhatsApp: ' + phone + '\n' +
+      '🎯 Service: ' + serviceLabel + '\n' +
+      '💬 Message:\n' + message + '\n' +
+      '---\n' +
+      '_Sent via I.A.E contact form_';
+
+    var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(text);
+
+    flash.classList.add('show');
+
+    setTimeout(function(){
+      window.open(url, '_blank', 'noopener');
+      form.reset();
+      setTimeout(function(){ flash.classList.remove('show'); }, 3500);
+    }, 500);
+  });
+})();
+</script>
+{% endblock %}

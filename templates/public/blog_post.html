@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} — I.A.E™{% endblock %}
+{% block description %}{{ post.excerpt }}{% endblock %}
+
+{% block extra_css %}
+.blog-single{padding:60px 0 120px;background:var(--cream)}
+
+.breadcrumb{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted);margin-bottom:30px;flex-wrap:wrap;font-family:var(--mono,ui-monospace,monospace);letter-spacing:.06em}
+.breadcrumb a{color:var(--muted);border-bottom:1px solid transparent;transition:all .2s}
+.breadcrumb a:hover{color:var(--choco);border-bottom-color:currentColor}
+.breadcrumb .sep{color:var(--cream-3)}
+.breadcrumb .current{color:var(--choco-2)}
+
+.post-header{max-width:800px;margin:0 auto 44px;text-align:center}
+.post-header .eyebrow{justify-content:center;display:inline-flex}
+.post-header h1{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.6rem);line-height:1.1;color:var(--choco);letter-spacing:-.02em;margin:18px 0 24px}
+.post-meta{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);font-family:var(--mono,ui-monospace,monospace);letter-spacing:.06em}
+.post-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--caramel);opacity:.6}
+
+.post-cover{max-width:960px;margin:0 auto 56px;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--cream-3);background:var(--cream-2)}
+.post-cover img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover}
+.post-cover .img-fallback{aspect-ratio:16/9}
+
+.post-content{max-width:720px;margin:0 auto;font-size:1.08rem;line-height:1.8;color:var(--ink)}
+.post-content > *+*{margin-top:1.2em}
+.post-content p{margin-bottom:1.2em}
+.post-content h2{font-family:var(--serif);font-size:1.85rem;color:var(--choco);letter-spacing:-.01em;line-height:1.2;margin:2em 0 .6em}
+.post-content h3{font-family:var(--serif);font-size:1.4rem;color:var(--choco);letter-spacing:-.01em;line-height:1.25;margin:1.8em 0 .5em}
+.post-content ul,.post-content ol{margin:1em 0 1.4em;padding-left:1.4em}
+.post-content ul{list-style:none;padding-left:0}
+.post-content ul li{position:relative;padding-left:26px;margin-bottom:.65em}
+.post-content ul li::before{content:"●";position:absolute;left:0;top:0;color:var(--caramel);font-size:.7em;line-height:2.2}
+.post-content ol li{margin-bottom:.6em;padding-left:6px}
+.post-content ol li::marker{color:var(--caramel-2);font-weight:600}
+.post-content a{color:var(--caramel-2);border-bottom:1.5px solid currentColor;font-weight:500;transition:color .2s}
+.post-content a:hover{color:var(--choco)}
+.post-content strong{color:var(--choco);font-weight:700}
+.post-content em{font-style:italic}
+.post-content blockquote{border-left:3px solid var(--gold);padding:10px 0 10px 24px;font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--choco-2);margin:1.6em 0}
+.post-content img{max-width:100%;height:auto;border-radius:var(--r);margin:1.6em 0;box-shadow:var(--shadow)}
+.post-content code{background:var(--cream-2);padding:2px 8px;border-radius:4px;font-family:var(--mono,ui-monospace,monospace);font-size:.9em;color:var(--choco)}
+.post-content pre{background:var(--choco);color:var(--cream-2);padding:20px 22px;border-radius:var(--r);overflow-x:auto;font-size:.9rem;line-height:1.6;margin:1.6em 0}
+.post-content pre code{background:none;padding:0;color:inherit}
+.post-content hr{border:none;border-top:1px solid var(--cream-3);margin:2.4em 0}
+
+.post-nav{max-width:960px;margin:80px auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:44px;border-top:1px solid var(--cream-3)}
+.post-nav-link{display:flex;flex-direction:column;gap:8px;padding:22px 24px;background:var(--cream-2);border-radius:var(--r);border:1.5px solid transparent;transition:all .25s ease}
+.post-nav-link:hover{background:var(--cream-3);border-color:var(--caramel);transform:translateY(-3px)}
+.post-nav-link.next{text-align:right;grid-column:2}
+.post-nav-link .dir{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono,ui-monospace,monospace);font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--caramel-2)}
+.post-nav-link.next .dir{justify-content:flex-end}
+.post-nav-link .title{font-family:var(--serif);font-weight:600;color:var(--choco);line-height:1.35;font-size:1.05rem}
+.post-nav-link:hover .title{color:var(--choco-2)}
+
+.post-cta{max-width:960px;margin:0 auto;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .blog-single{padding:40px 0 90px}
+  .post-header{margin-bottom:32px}
+  .post-cover{margin-bottom:40px}
+  .post-content{font-size:1.02rem}
+  .post-content h2{font-size:1.55rem}
+  .post-content h3{font-size:1.25rem}
+}
+@media (max-width:640px){
+  .post-nav{grid-template-columns:1fr;gap:14px}
+  .post-nav-link.next{grid-column:auto;text-align:left}
+  .post-nav-link.next .dir{justify-content:flex-start}
+  .post-cta .btn{flex:1;justify-content:center}
+}
+{% endblock %}
+
+{% block content %}
+
+<article class="blog-single">
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <span class="sep">/</span>
+      <a href="{{ url_for('blog.index') }}">Blog</a>
+      <span class="sep">/</span>
+      <a href="{{ url_for('blog.index', category=post.category) }}">{{ post.category }}</a>
+      <span class="sep">/</span>
+      <span class="current">{{ post.title|truncate(40, true) }}</span>
+    </nav>
+
+    <header class="post-header">
+      <span class="eyebrow">{{ post.category }}</span>
+      <h1>{{ post.title }}</h1>
+      <div class="post-meta">
+        <span>{{ post.created_at.strftime('%B %d, %Y') }}</span>
+        <span class="dot"></span>
+        <span>{{ post.read_minutes }} min read</span>
+        {% if post.author %}
+          <span class="dot"></span>
+          <span>{{ post.author.full_name or post.author.username }}</span>
+        {% endif %}
+      </div>
+    </header>
+
+    {% if post.cover_image %}
+      <figure class="post-cover">
+        <img src="{{ url_for('static', filename=post.cover_image) }}"
+             alt="{{ post.title }}"
+             onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
+      </figure>
+    {% endif %}
+
+    <div class="post-content">
+      {{ post.body|safe }}
+    </div>
+
+    <nav class="post-nav" aria-label="Post navigation">
+      {% if prev_post %}
+        <a href="{{ url_for('blog.post', slug=prev_post.slug) }}" class="post-nav-link prev">
+          <span class="dir"><i class="fas fa-arrow-left"></i> Previous</span>
+          <span class="title">{{ prev_post.title }}</span>
+        </a>
+      {% endif %}
+      {% if next_post %}
+        <a href="{{ url_for('blog.post', slug=next_post.slug) }}" class="post-nav-link next">
+          <span class="dir">Next <i class="fas fa-arrow-right"></i></span>
+          <span class="title">{{ next_post.title }}</span>
+        </a>
+      {% endif %}
+    </nav>
+
+    <div class="post-cta">
+      <a href="{{ url_for('blog.index') }}" class="btn btn-outline">
+        <i class="fas fa-arrow-left"></i> All posts
+      </a>
+      <a href="https://wa.me/2347079396111" target="_blank" rel="noopener" class="btn btn-primary">
+        <i class="fab fa-whatsapp"></i> Talk to us
+      </a>
+    </div>
+
+  </div>
+</article>
+
+{% endblock %}
