@@ -53,7 +53,7 @@
         <p>Restricted area — sign in to continue</p>
       </div>
 
-      <form method="POST" action="{{ url_for('admin.login') }}" class="admin-form" autocomplete="on">
+      <form method="POST" action="{{ url_for('admin.auth.login') }}" class="admin-form" autocomplete="on">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <div class="form-group">
