@@ -33,6 +33,26 @@ def waec():
     return render_template('public/waec.html')
 
 
+@public_bp.route('/neco')
+def neco():
+    return render_template('public/neco.html')
+
+
+@public_bp.route('/nabteb')
+def nabteb():
+    return render_template('public/nabteb.html')
+
+
+@public_bp.route('/jupeb')
+def jupeb():
+    return render_template('public/jupeb.html')
+
+
+@public_bp.route('/ijmb')
+def ijmb():
+    return render_template('public/ijmb.html')
+
+
 @public_bp.route('/testimonials')
 def testimonials():
     return render_template('public/testimonials.html')

@@ -234,6 +234,10 @@ section.block{background:var(--cream)}
     <a class="m-link" href="{{ url_for('public.services') }}">Services</a>
     <a class="m-link" href="{{ url_for('public.jamb') }}">JAMB</a>
     <a class="m-link" href="{{ url_for('public.waec') }}">WAEC</a>
+    <a class="m-link" href="{{ url_for('public.neco') }}">NECO</a>
+    <a class="m-link" href="{{ url_for('public.nabteb') }}">NABTEB</a>
+    <a class="m-link" href="{{ url_for('public.jupeb') }}">JUPEB</a>
+    <a class="m-link" href="{{ url_for('public.ijmb') }}">IJMB</a>
     <a class="m-link" href="{{ url_for('blog.index') }}">Blog</a>
     <a class="m-link" href="{{ url_for('public.contact') }}">Contact</a>
     <div class="m-actions">
@@ -303,20 +307,19 @@ section.block{background:var(--cream)}
         <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
         <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
       </ul></div>
-      <div><h4>Services</h4><ul>
+      <div><h4>Exams</h4><ul>
         <li><a href="{{ url_for('public.jamb') }}">JAMB</a></li>
         <li><a href="{{ url_for('public.waec') }}">WAEC</a></li>
-        <li><a href="{{ url_for('public.services') }}">All services</a></li>
+        <li><a href="{{ url_for('public.neco') }}">NECO</a></li>
+        <li><a href="{{ url_for('public.nabteb') }}">NABTEB</a></li>
+        <li><a href="{{ url_for('public.jupeb') }}">JUPEB</a></li>
+        <li><a href="{{ url_for('public.ijmb') }}">IJMB</a></li>
       </ul></div>
-      <div><h4>Read</h4><ul>
-        <li><a href="{{ url_for('blog.index') }}">All posts</a></li>
-        {% if latest_posts is defined %}
-          {% for post in latest_posts[:3] %}
-            <li><a href="{{ url_for('blog.post', slug=post.slug) }}">{{ post.title }}</a></li>
-          {% endfor %}
-        {% else %}
-          <li><a href="{{ url_for('blog.index') }}">Guides &amp; updates</a></li>
-        {% endif %}
+      <div><h4>More services</h4><ul>
+        <li><a href="{{ url_for('public.services') }}">Certificates</a></li>
+        <li><a href="{{ url_for('public.services') }}">Admission processing</a></li>
+        <li><a href="{{ url_for('public.services') }}">NIN services</a></li>
+        <li><a href="{{ url_for('public.services') }}">All services</a></li>
       </ul></div>
       <div><h4>Contact</h4><ul class="contact-list">
         <li><i class="fas fa-phone"></i><a href="tel:07079396111">0707 939 6111</a></li>
@@ -336,7 +339,6 @@ section.block{background:var(--cream)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (function(){
-  /* Mobile menu */
   var btn = document.getElementById('hamburger');
   var menu = document.getElementById('mobileMenu');
   var icon = document.getElementById('hamIcon');
@@ -355,7 +357,6 @@ section.block{background:var(--cream)}
     });
   }
 
-  /* Progress bar + header state */
   var bar = document.getElementById('progress');
   var header = document.querySelector('.site-header');
   function onScroll(){
@@ -366,7 +367,6 @@ section.block{background:var(--cream)}
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
 
-  /* Auto-dismiss flashes after 6s */
   document.querySelectorAll('.flash').forEach(function(f){
     setTimeout(function(){
       f.style.transition = 'opacity .4s, transform .4s';
@@ -376,7 +376,6 @@ section.block{background:var(--cream)}
     }, 6000);
   });
 
-  /* Reveal on scroll — shared, runs on every page */
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined'){
     gsap.registerPlugin(ScrollTrigger);
     gsap.set('.reveal', { opacity:0, y:36 });

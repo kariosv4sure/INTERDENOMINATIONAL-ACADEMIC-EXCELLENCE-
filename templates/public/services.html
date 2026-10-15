@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}Services — I.A.E™{% endblock %}
-{% block description %}JAMB, WAEC, A'Level, certificates, admission processing and NIN services — all handled by one team.{% endblock %}
+{% block description %}JAMB, WAEC, NECO, NABTEB, JUPEB, IJMB, certificates, admission processing and NIN services — all handled by one team.{% endblock %}
 
 {% block extra_css %}
 .page-hero{padding:80px 0 60px;background:var(--cream-2);border-bottom:1px solid var(--cream-3);position:relative;overflow:hidden}
@@ -33,6 +33,8 @@
 .svc-body ul{display:grid;gap:10px}
 .svc-body li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--choco-2);line-height:1.5}
 .svc-body li i{color:var(--green);font-size:.85rem;margin-top:4px;flex-shrink:0}
+.svc-body li a{color:var(--caramel-2);font-weight:600;border-bottom:1px solid transparent;transition:border-color .2s}
+.svc-body li a:hover{border-bottom-color:currentColor}
 .svc-price{padding-top:16px;border-top:1px solid var(--cream-3);margin-top:auto}
 .svc-price .lbl{font-family:var(--mono,ui-monospace,monospace);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .svc-price .amt{font-family:var(--serif);font-weight:700;font-size:1.5rem;color:var(--choco);display:block;margin-top:4px}
@@ -97,8 +99,8 @@
 <section class="page-hero">
   <div class="container">
     <span class="eyebrow">What we handle</span>
-    <h1>Six services. <em>One team.</em></h1>
-    <p>Everything between "I need to register" and "my admission is confirmed." Pick a starting point — we take it from there.</p>
+    <h1>Every exam. <em>Every step.</em></h1>
+    <p>From JAMB registration to WAEC certificates, A'Level programmes to NIN enrolment — pick a starting point and we take it from there.</p>
   </div>
 </section>
 
@@ -107,27 +109,29 @@
   <div class="container">
     <div class="svc-tabs" id="svcTabs">
       <button class="tab-btn active" data-cat="all">All services</button>
-      <button class="tab-btn" data-cat="exam">Exam services</button>
+      <button class="tab-btn" data-cat="olevel">O'Level exams</button>
+      <button class="tab-btn" data-cat="alevel">A'Level exams</button>
+      <button class="tab-btn" data-cat="jamb">JAMB</button>
       <button class="tab-btn" data-cat="cert">Certificates</button>
-      <button class="tab-btn" data-cat="admin">Admission</button>
-      <button class="tab-btn" data-cat="tut">Tutorials</button>
+      <button class="tab-btn" data-cat="admin">Admission & NIN</button>
     </div>
 
     <div class="svc-grid" id="svcGrid">
 
-      <article class="svc-card" data-cat="exam">
+      <!-- O'LEVEL HUB -->
+      <article class="svc-card" data-cat="olevel">
         <div class="svc-head">
           <div class="ic"><i class="fas fa-book-open"></i></div>
           <h3>O'Level services</h3>
           <span class="badge">WAEC · NECO · NABTEB</span>
         </div>
         <div class="svc-body">
-          <p>Registration, result checking, and certificate handling for all Nigerian secondary exam bodies.</p>
+          <p>Registration, coaching, result checking, and certificate handling for all three Nigerian O'Level exam bodies.</p>
           <ul>
-            <li><i class="fas fa-circle-check"></i> Registration e-PINs &amp; scratch cards</li>
+            <li><i class="fas fa-circle-check"></i> <a href="{{ url_for('public.waec') }}">WAEC services →</a></li>
+            <li><i class="fas fa-circle-check"></i> <a href="{{ url_for('public.neco') }}">NECO services →</a></li>
+            <li><i class="fas fa-circle-check"></i> <a href="{{ url_for('public.nabteb') }}">NABTEB services →</a></li>
             <li><i class="fas fa-circle-check"></i> Result checking &amp; printing</li>
-            <li><i class="fas fa-circle-check"></i> Certificate issuance &amp; verification</li>
-            <li><i class="fas fa-circle-check"></i> Statement of result processing</li>
           </ul>
           <div class="svc-price">
             <span class="lbl">Starting from</span>
@@ -139,7 +143,8 @@
         </div>
       </article>
 
-      <article class="svc-card" data-cat="exam">
+      <!-- JAMB -->
+      <article class="svc-card" data-cat="jamb">
         <div class="svc-head">
           <div class="ic"><i class="fas fa-pen-to-square"></i></div>
           <h3>JAMB services</h3>
@@ -163,18 +168,19 @@
         </div>
       </article>
 
-      <article class="svc-card" data-cat="exam tut">
+      <!-- A'LEVEL HUB -->
+      <article class="svc-card" data-cat="alevel">
         <div class="svc-head">
           <div class="ic"><i class="fas fa-graduation-cap"></i></div>
           <h3>A'Level services</h3>
-          <span class="badge">IJMB · JUPEB · Cambridge</span>
+          <span class="badge">JUPEB · IJMB · Cambridge</span>
         </div>
         <div class="svc-body">
-          <p>Advanced level and international exam programmes for direct-entry and study-abroad routes.</p>
+          <p>One-year A'Level programmes for Direct Entry into 200 level — plus international exams.</p>
           <ul>
-            <li><i class="fas fa-circle-check"></i> IJMB &amp; JUPEB registration</li>
+            <li><i class="fas fa-circle-check"></i> <a href="{{ url_for('public.jupeb') }}">JUPEB services →</a></li>
+            <li><i class="fas fa-circle-check"></i> <a href="{{ url_for('public.ijmb') }}">IJMB services →</a></li>
             <li><i class="fas fa-circle-check"></i> IELTS · SAT · TOEFL · GRE</li>
-            <li><i class="fas fa-circle-check"></i> Study materials &amp; past questions</li>
             <li><i class="fas fa-circle-check"></i> Full tutorial support</li>
           </ul>
           <div class="svc-price">
@@ -187,6 +193,7 @@
         </div>
       </article>
 
+      <!-- CERTIFICATES -->
       <article class="svc-card" data-cat="cert">
         <div class="svc-head">
           <div class="ic"><i class="fas fa-certificate"></i></div>
@@ -211,6 +218,7 @@
         </div>
       </article>
 
+      <!-- ADMISSION -->
       <article class="svc-card" data-cat="admin">
         <div class="svc-head">
           <div class="ic"><i class="fas fa-building-columns"></i></div>
@@ -235,7 +243,8 @@
         </div>
       </article>
 
-      <article class="svc-card" data-cat="cert admin">
+      <!-- NIN -->
+      <article class="svc-card" data-cat="admin cert">
         <div class="svc-head">
           <div class="ic"><i class="fas fa-fingerprint"></i></div>
           <h3>NIN services</h3>
